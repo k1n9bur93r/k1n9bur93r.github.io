@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="./css/site.css">
+<body>
+<div>
+    <label> Scroll Pages:</label>
+    <button id="down" style="width:100px;"> Down </button>
+    <button id="up" style="width:100px;"> Up </button>
+
+</div>
+<div style="margin-top:10px;width:100%;border: 0px; border-top: 5px;border-color: darkgray;border-style: groove; display: flex; justify-content: left;">
+    <div style="width:50%;margin:20px;height: 90vh;" id="CanvasTarget">
+        <label for="text">Text To Display: </label>
+        <select name="text" id="text">
+        </select>
+        <button id="load" style="padding-right:10px;"> Load Selection </button>     
+        <label  style="padding-left:10px;border:0px;border-left: 5px; border-color: darkgray;border-style: groove;" >Custom Text: </label>
+        <input id="customText"style="width:50% ;" type="text" placeholder="Hello! This is #t:custom#bg:white#c:black NEWLINE Text! #t:SKIPLINE#bg:maroon">
+        <button id="save"> Save Text (till refresh) </button>
+    </div>
+    <div style="width: 50%;">
+
+
+        <h2 style="width: 100%; text-align:left">Formatting Commands and Styles</h2>
+ 
+        <div style="display:block;" >
+            
+            <div style="display:flex; justify-content: left;">
+                <div>
+                    <h3 style="width: 100%; text-align:left">Commands</h3>
+                    <table style="border: 1px solid;">
+                    <tr> 
+                        <th style="border: 1px solid;">Command</th>
+                        <th style="border: 1px solid;">Desc.</th>    
+                    </tr>
+                    <tr>
+                        <td>NEWLINE</td>
+                        <td> Next word starts on a new line </td>
+                    </tr>
+                    <tr>
+                        <td>SKIPLINE</td>
+                        <td> Creates a full empty line, Next word starts on the following line </td>
+                    </tr>
+                    <tr>
+                        <td>PAGEFILL</td>
+                        <td> Fills the rest of the lines </td>
+                    </tr>
+                    </table>
+                </div>
+                <div style="margin-left:20px ;">
+                    <br/>
+                    <br/>
+                    <p>You can use these commands between words to add dynamic formatting to your text. You can go to a new line, skip a line, or skip an entire page!</p>
+                </div>
+            </div>
+            <div style="display:flex; justify-content: left;"> 
+                <div>
+                    <h3 style="width: 100%; text-align:left">Formatting</h3>
+                    <table style="border: 1px solid;">
+                        <tr> 
+                            <th style="border: 1px solid;">Property</th>
+                            <th style="border: 1px solid;">Desc.</th>    
+                        </tr>
+                        <tr>
+                            <td>#t:</td>
+                            <td> Text for your word</td>
+                        </tr>
+                        <tr>
+                            <td>#f:</td>
+                            <td> Font for the word </td>
+                        </tr>
+                        <tr>
+                            <td>#c:</td>
+                            <td> Color of the text </td>
+                        </tr>
+                        <tr>
+                            <td>#bg:</td>
+                            <td> Color of the cell for the word</td>
+                        </tr>
+                        <tr>
+                            <td>#p:</td>
+                            <td> Use a preset for formatting </td>
+                        </tr>
+                        <tr>
+                            <td>#h:</td>
+                            <td> Link to URL or Index of new text value</td>
+                        </tr>
+                    </table>
+                </div>
+                <div style="margin-left:20px ;">
+                    <br/>
+                    <br/>
+                    <p>You can add formatting to any word you want!</p>
+                    <ul>
+                        <li>If you want to add some formatting then you need to add a #t: tag infront of whatever text you want to print</li>
+                        <li>Formatting is read left to right, meaning the right most command will override any previous identical commands </li>
+                        <li> You can format a command to fill cells with a color </li>
+                        <li> You can create singled colored cells by not including any text </li>
+                        <li> the #h: format requries an additional sub format of either <strong>:l</strong> for URLs or <strong>:p</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="./js/billboard.js"></script>
