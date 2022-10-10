@@ -741,10 +741,8 @@ function CreateCells(grid,words)
 
             let formatedWord=words[currentWord];
             cellFill=DetermineFillCount(grid,formatedWord,currentRowPosition,i); 
-            console.log(formatedWord);
             customFormat=formatObject(formatedWord);
             formatedWord=DetermineTextFromFormat(formatedWord,customFormat);
-            console.log(formatedWord);
 
             customFormatNonWord=(formatedWord==" " &&customFormat)||CheckCommand(formatedWord) ?true:false;
 
