@@ -157,18 +157,15 @@ class BillBoard
     {
         if(this.CurrentGrid<this.Grids.length-1)
         {
-            
             this.Grids[this.CurrentGrid].SetVisible();
             this.Grids[++this.CurrentGrid].SetVisible();
             SoundHandler('page');
-
         }
     }
     this.PrevGrid=function()
     {
         if(this.CurrentGrid>0)
         {
-            
             this.Grids[this.CurrentGrid].SetVisible();
             this.Grids[--this.CurrentGrid].SetVisible();
             SoundHandler('page');
@@ -674,9 +671,12 @@ function SetCanvas()
 }
 function PageLoad(value=0)
 {
+    if(currentBillBoard==null)
+    {
     SetCanvas();
     currentBillBoard=new BillBoard();
     currentBillBoard.CreateBillBoard(CanvasID);
+    }
     currentBillBoard.TotalText=TestText[value];
     SoundHandler('load');
     CreateGrids(currentBillBoard);
