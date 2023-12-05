@@ -36,7 +36,6 @@ class dynElement
         this.Data= localData;
         this.Template=localTemplate;
         localElement=this.#RenderElement();
-        //console.log(localElement);
         this.Element= localElement;
     }
     #RenderElement()
@@ -50,9 +49,7 @@ class dynElement
             {
                 //assumes there will always be a 1:1 binding so things can fail bad here 
                 let name= prop.getAttribute('data');
-                console.log(prop.getAttribute('data'));
                 let value = this.Data[name];
-                console.log(value);
                 prop.textContent= value;
             }
             return element;
