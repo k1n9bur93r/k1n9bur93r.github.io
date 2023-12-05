@@ -1,0 +1,22 @@
+12/3/23
+Hello World, PING 
+This is a start.
+This is the first message used to build the simple blog file
+---12/3/23
+Good day, PONG
+Need something to demo?
+And this is the second message needed to show that we can indeed parse...
+---12/4/23
+Start of Day Two
+templates and rendering
+Day one was kinda slow, but most of it was building the idea that I want to implement today, I think I will be able to execute quick with this.
+---12/4/23
+Wowowow
+gotta deal with the cat
+Okay I kinda mindfucked myself a little bit here, if I can get out of this knot I invented something epic
+---12/4/23
+Booyah!
+VIP Established
+I took this way farther than I expected today, I created a new object called dynaElement that can take in a generic object and a generic template and return a document fragment that has all of it's values bound. how cool!!!
+
+
