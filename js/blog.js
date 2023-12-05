@@ -32,11 +32,9 @@ class dynElement
     {
         let localData = data;
         let localTemplate = template;
-        let localElement;
         this.Data= localData;
         this.Template=localTemplate;
-        localElement=this.#RenderElement();
-        this.Element= localElement;
+        this.Element= this.#RenderElement();
     }
     #RenderElement()
         {
