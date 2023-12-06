@@ -18,5 +18,13 @@ Okay I kinda mindfucked myself a little bit here, if I can get out of this knot 
 Booyah!
 VIP Established
 I took this way farther than I expected today, I created a new object called dynaElement that can take in a generic object and a generic template and return a document fragment that has all of it's values bound. how cool!!!
+---12/5/23
+Putting a Bow on it
+How well can we scale our design?
+Going to bed last night my mind was so focused on the idea of createing a 'dynTemplate' style page that is able to accept a series of data elements, and html templates and can exert more control how dynElements are rendered. I think I can build off of what was made before to get that working within an evening.
+---12/5/23
+oops.
+cringe.
+Sometimes I code the most stupid things without realizing what I am doing. I focus too much on creating setters and getters I realize I'm not actally doing anything lol.
 
 
