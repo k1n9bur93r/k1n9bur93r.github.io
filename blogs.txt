@@ -34,4 +34,7 @@ Okay yeah things got kinda weird for a moemnt, they still are, but I've been abl
 Siri Shortcut Posting
 Hell yes
 I need to refine this more, but i can post kinda quickly from my phone.
-
+---12/6/23
+Siri Shortcuts!
+Keep it local
+I have a Siri shortcut that I can trigger with my iPhone’s action button. It throws up input UI for the blog entries and copy’s a blog to my keyboard I bet I can get even more clever with this…
