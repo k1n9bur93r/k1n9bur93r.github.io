@@ -84,10 +84,9 @@ function fetchBlog()
             })
             .then(data => {
                 let blogSources = data.split('---');
-                blogSources = blogSources.slice(1);
                 let blogs = blogSources.map(blogSource=>new dynElement(new blog(blogSource),template));
                 let blogContainer = document.getElementById('blogs');
-                for( let blog of blogs())
+                for( let blog of blogs.reverse())
                 {
                     blogContainer.appendChild(blog.Element);
                 }

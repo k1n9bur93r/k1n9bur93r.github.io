@@ -1,48 +1,48 @@
----12/6/23
-UNLV
-Crazy
-This one feels a bit more close to home, for obvious reasons. It’s all so senseless.
----12/6/23
-Hehe
-I love this 
-So raaaaad
----12/6/23
-Siri Shortcuts!
-Keep it local
-I have a Siri shortcut that I can trigger with my iPhone’s action button. It throws up input UI for the blog entries and copy’s a blog to my keyboard I bet I can get even more clever with this…
----12/6/23
-Siri Shortcut Posting
-Hell yes
-I need to refine this more, but i can post kinda quickly from my phone.
----12/5/23
-Salvage
-puttin 2 n 2 2getha
-Okay yeah things got kinda weird for a moemnt, they still are, but I've been able to expand my conept a bit, made a lot less progress 2nite, don't really have anything to show. BUT I have a lot of gold nuggets I just need to parse out from this
----12/5/23
-oops.
-cringe.
-Sometimes I code the most stupid things without realizing what I am doing. I focus too much on creating setters and getters I realize I'm not actally doing anything lol.
----12/5/23
-Putting a Bow on it
-How well can we scale our design?
-Going to bed last night my mind was so focused on the idea of createing a 'dynTemplate' style page that is able to accept a series of data elements, and html templates and can exert more control how dynElements are rendered. I think I can build off of what was made before to get that working within an evening.
+12/3/23
+Hello World, PING 
+This is a start.
+This is the first message used to build the simple blog file
+---12/3/23
+Good day, PONG
+Need something to demo?
+And this is the second message needed to show that we can indeed parse...
 ---12/4/23
-Booyah!
-VIP Established
-I took this way farther than I expected today, I created a new object called dynaElement that can take in a generic object and a generic template and return a document fragment that has all of it's values bound. how cool!!!
+Start of Day Two
+templates and rendering
+Day one was kinda slow, but most of it was building the idea that I want to implement today, I think I will be able to execute quick with this.
 ---12/4/23
 Wowowow
 gotta deal with the cat
 Okay I kinda mindfucked myself a little bit here, if I can get out of this knot I invented something epic
 ---12/4/23
-Start of Day Two
-templates and rendering
-Day one was kinda slow, but most of it was building the idea that I want to implement today, I think I will be able to execute quick with this.
----12/3/23
-Good day, PONG
-Need something to demo?
-And this is the second message needed to show that we can indeed parse...
----12/3/23
-Hello World, PING 
-This is a start.
-This is the first message used to build the simple blog file
+Booyah!
+VIP Established
+I took this way farther than I expected today, I created a new object called dynaElement that can take in a generic object and a generic template and return a document fragment that has all of it's values bound. how cool!!!
+---12/5/23
+Putting a Bow on it
+How well can we scale our design?
+Going to bed last night my mind was so focused on the idea of createing a 'dynTemplate' style page that is able to accept a series of data elements, and html templates and can exert more control how dynElements are rendered. I think I can build off of what was made before to get that working within an evening.
+---12/5/23
+oops.
+cringe.
+Sometimes I code the most stupid things without realizing what I am doing. I focus too much on creating setters and getters I realize I'm not actally doing anything lol.
+---12/5/23
+Salvage
+puttin 2 n 2 2getha
+Okay yeah things got kinda weird for a moemnt, they still are, but I've been able to expand my conept a bit, made a lot less progress 2nite, don't really have anything to show. BUT I have a lot of gold nuggets I just need to parse out from this
+---12/6/23
+Siri Shortcut Posting
+Hell yes
+I need to refine this more, but i can post kinda quickly from my phone.
+---12/6/23
+Siri Shortcuts!
+Keep it local
+I have a Siri shortcut that I can trigger with my iPhone’s action button. It throws up input UI for the blog entries and copy’s a blog to my keyboard I bet I can get even more clever with this…
+---12/6/23
+Hehe
+I love this 
+So raaaaad
+---12/6/23
+UNLV
+Crazy
+This one feels a bit more close to home, for obvious reasons. It’s all so senseless.
