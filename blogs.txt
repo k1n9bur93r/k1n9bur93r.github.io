@@ -2,11 +2,11 @@
 UNLV
 Crazy
 This one feels a bit more close to home, for obvious reasons. It’s all so senseless.
-----12/6/23
+---12/6/23
 Hehe
 I love this 
 So raaaaad
---12/6/23
+---12/6/23
 Siri Shortcuts!
 Keep it local
 I have a Siri shortcut that I can trigger with my iPhone’s action button. It throws up input UI for the blog entries and copy’s a blog to my keyboard I bet I can get even more clever with this…
@@ -42,7 +42,7 @@ Day one was kinda slow, but most of it was building the idea that I want to impl
 Good day, PONG
 Need something to demo?
 And this is the second message needed to show that we can indeed parse...
-12/3/23
+---12/3/23
 Hello World, PING 
 This is a start.
 This is the first message used to build the simple blog file
