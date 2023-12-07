@@ -42,7 +42,7 @@ class dynElement
             var nodes = document.createElement('div');
             nodes.innerHTML=this.Template;
             element.appendChild(nodes)
-            let props= element.querySelectorAll('#data');
+            let props= element.querySelectorAll('[data]');
             for(var prop of props)
             {
                 //assumes there will always be a 1:1 binding so things can fail bad here 
@@ -67,7 +67,7 @@ class dynElement
 function fetchBlog()
 {
 
-    fetch('templates/blog.html')
+    fetch('templates/BlogEntry.html')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch Blog template');
