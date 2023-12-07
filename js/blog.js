@@ -75,7 +75,7 @@ function fetchBlog()
             return response.text();
         })
         .then(template=>{
-            fetch('blogs.txt')
+            fetch('../blogs.txt')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Failed to fetch Blogs');
