@@ -1,4 +1,8 @@
-12/3/23
+---12/6/23
+Hey Aus
+Amazing test
+Took me all my coding time today to get this shortcut working NICE  
+ 12/3/23
 Hello World, PING 
 This is a start.
 This is the first message used to build the simple blog file
