@@ -65,7 +65,7 @@ I had one big thing I needed to do today, but had three mini things and one medi
 ---12/9/23
 Gaming
 We go hard
-Another long day of BS. Good news is that I did the conversion, which involved a lot more messing around with code than I thought previously. Good news is though, I think I also did 70% of the hard work for converting things over to being fully parallelized 
+Another long day of BS. Good news is that I did the conversion, which involved a lot more messing around with code than I thought previously.  I think I also did 70% of the hard work for converting things over to being fully parallelized 
 
 ---12/9/23
 Progress…
