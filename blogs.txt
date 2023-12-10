@@ -66,3 +66,8 @@ I had one big thing I needed to do today, but had three mini things and one medi
 Gaming
 We go hard
 Another long day of BS. Good news is that I did the conversion, which involved a lot more messing around with code than I thought previously. Good news is though, I think I also did 70% of the hard work for converting things over to being fully parallelized 
+
+---12/9/23
+Progress…
+Async hell holes
+Back on the progress train! So the good news is that despite the lag in returning to work, I remembered more than I thought I would. The bad news is that while I did indeed write some kind of code before, a lot of it was disjointed and it took most of the day to get to a point where objects have been able to chain and initialize each other. I’m now running into some standard JS async stuff. Since everything on the page needs to be fetched, there are a lot of items that need to load their contents, for other items to load their own. THEN the main page has to place everything. I think I need to throw in some callbacks and make it so my classes don’t initialize themselves? 
