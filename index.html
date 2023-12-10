@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K1n9's blog space</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="js/blog.js"></script>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <script type="module" src="js/site.js"></script>
 </head>
 <body>
     <h1>K1n9Bur93r</h1>
@@ -17,8 +17,5 @@
         <li> Generic object handles binding and updating data to template</li>
     </ul>
     <br>
-    <h2>Blogs</h2>
-    <div id="blogs" style="width:800px;border: 1px solid black; padding:10px;display:flex;justify-content: center;flex-direction: column;">
-
-    </div>
+    <div id ="zig" template="../templates/BlogStack.html" data="../blogs.txt" element ='../templates/BlogEntry.html'></div>
 </body>
