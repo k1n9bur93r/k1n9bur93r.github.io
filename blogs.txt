@@ -71,3 +71,8 @@ Another long day of BS. Good news is that I did the conversion, which involved a
 Progress…
 Async hell holes
 Back on the progress train! So the good news is that despite the lag in returning to work, I remembered more than I thought I would. The bad news is that while I did indeed write some kind of code before, a lot of it was disjointed and it took most of the day to get to a point where objects have been able to chain and initialize each other. I’m now running into some standard JS async stuff. Since everything on the page needs to be fetched, there are a lot of items that need to load their contents, for other items to load their own. THEN the main page has to place everything. I think I need to throw in some callbacks and make it so my classes don’t initialize themselves? 
+
+---12/10/23
+Containers!
+We getting meta 
+Okay, so I know that there is a way where this can be back ported to the ‘dynElement’ object, but we have a simple enough templating system in the works.  So the new flow is the following dynContainer->dynObject(blogData),dynObject(blogHtml),dynObject(containerHtml). The ‘dynObjects’ handle all the fetching of our information, then the container combines the blog information into ‘dynElements’ which are then placed within the ‘dynContainer’’s template. So kinda meta? 
