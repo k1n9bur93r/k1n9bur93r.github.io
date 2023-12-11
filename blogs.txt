@@ -76,3 +76,8 @@ Back on the progress train! So the good news is that despite the lag in returnin
 Containers!
 We getting meta 
 Okay, so I know that there is a way where this can be back ported to the ‘dynElement’ object, but we have a simple enough templating system in the works.  So the new flow is the following dynContainer->dynObject(blogData),dynObject(blogHtml),dynObject(containerHtml). The ‘dynObjects’ handle all the fetching of our information, then the container combines the blog information into ‘dynElements’ which are then placed within the ‘dynContainer’’s template. So kinda meta? 
+
+---12/10/23
+Dad Demo
+Demo demo demo
+It’s fun showing ppl stuff. Especially when it is a whole new world. 
