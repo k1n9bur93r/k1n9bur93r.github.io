@@ -155,3 +155,8 @@ I’m pretty sure I am the first person to fill out for a new passport using the
 Hi Wargen
 This is what the button does
 I enjoy using buttons
+
+---2/21/24
+Dyn Progress
+Agonizing 
+I am for sure not following my own advice when it comes to building feature by feature. I have prototyped, debugged to near completion, then major refactored multiple times over at this point. Though with each iteration things feel more right. Hopefully a good sign!
