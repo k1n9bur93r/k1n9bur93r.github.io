@@ -160,3 +160,8 @@ I enjoy using buttons
 Dyn Progress
 Agonizing 
 I am for sure not following my own advice when it comes to building feature by feature. I have prototyped, debugged to near completion, then major refactored multiple times over at this point. Though with each iteration things feel more right. Hopefully a good sign!
+
+---2/23/24
+Found my way back 
+New challenges 
+Okay I think I caught up to where I was last week lol. My initial plan was to perform validation and rendering as a post tree creation process, but now each node is handling itself as the tree is being built. I will never make anything that will benefit from any kind of optimization tricks…but hopefully the JavaScript looks cooler?
