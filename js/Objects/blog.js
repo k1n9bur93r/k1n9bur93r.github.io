@@ -17,11 +17,7 @@ export class Blog
         return regexPattern.exec(this.Source)[1];
     }
     
-    static SourceParser(data)
-    {
-        let blogSources = data.split('---');
-        return blogSources.reverse().map(blogSource=>new Blog(blogSource));
-    }
+
     
 
 }

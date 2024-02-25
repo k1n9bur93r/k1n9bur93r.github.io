@@ -4,19 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K1n9's blog space</title>
-    <!-- <link rel="stylesheet" href="styles.css"> -->
-    <script type="module" src="js/site.js"></script>
+    <script type="module" src="js/dynObjects/Dyn.js"></script>
 </head>
+<style>
+    h1,h2,h3,h4,p,a{ white-space: pre; }
+</style>
 <body>
     <h1>K1n9Bur93r</h1>
     <p> Little projects and ideas in the hope of creating a good site. <a href="https://github.com/k1n9bur93r/k1n9bur93r.github.io/tree/main">Github</a></p>
-    <p> Current project: <strong>Blog System</strong></p>
+    <p> Current project: <strong>Dyn Static Site Templating System </strong></p>
+    <h3>Done Did</h3>
     <ul>
-        <li> Blogs read from a text file</li>
-        <li> Blog data is paired with a blog html template</li>
-        <li> Both of these items are then ran through a larger container that determines how items are displayed</li>
-        <li> Generic object handles binding and updating data to template</li>
+        <li> HTML Zen ☯️ ✅</li>
+        <li> No user facing JS ✅</li>
+        <li> Fetch local or external text/json data ✅</li>
+        <li> Locally created or fetched HTML templates ✅</li>
     </ul>
-    <br>
-    <div id ="zig" template="../templates/BlogStack.html" data="../blogs.txt" element ='../templates/BlogEntry.html'></div>
+    <h3>To Do</h3>
+    <ul>
+        <li> Fetched Resource sharing between Dyns</li>
+        <li> Debug and Viz tools</li>
+        <li> Scoped CSS styles</li>
+        <li> Test and update where things feel iffy</li>
+    </ul>
+    <div>
+        <h1>Widgets</h1>
+        <div dyn plate="./templates/WeatherWidget.html" record="https://goweather.herokuapp.com/weather/lasvegas" style ="width: 300px;"></div>
+        <br>
+        <h1>Blogs</h1>
+        <hr>
+        <div dyn="n" record="./blogs.txt" shape="ParseForBlogs">
+            <div style="background-color: papayawhip; border: 1px solid darkblue; padding:10px; ">
+                <div >
+                    <h3>Latest Blog- </h3> <h2 prop="Title"> N/A</h2>
+                </div>
+                <h3  syle="padding-top:0px;" prop="Header"></h3>
+                <p prop="Text"></p>
+                <sub><em prop="Date"></em></sub>
+            </div>
+        </div>
+
+        <hr>
+        <div style=" display: flex; justify-content: start; align-items: center; flex-direction: row;">
+            <h2>Past Blogs</h2>
+        </div>
+        <div dyn="n-1...0" record="./blogs.txt"plate="./templates/BlogEntry.html" shape="ParseForBlogs" style="height: 500px; overflow: scroll; background-color: lightblue; border: 1px  solid maroon; padding: 10px;" >
+        </div>
+
+    </div>
 </body>
+<script>
+    function ParseForBlogs(data)
+    {
+        const blogObject = (sourceData) => { 
+            const createRegexForNthLineFeed = (source, n) => {
+                if (n < 0) throw new Error("The number of line breaks (n) must be greater than or equal to 1.");
+            
+                const lineBreaks = '.*\n'.repeat(n);
+                const regexPattern = new RegExp(`^${lineBreaks}(.*?)\\n`, 'm');
+                return regexPattern.exec(source)[1];
+            }
+            let blogs = new Array();
+            sourceData.forEach(item =>{
+                 blogs.push({
+                    Date:createRegexForNthLineFeed(item,0),
+                    Title:createRegexForNthLineFeed(item,1),
+                    Header:createRegexForNthLineFeed(item,2),
+                    Text:createRegexForNthLineFeed(item,3)
+                });
+            });
+            return blogs;
+        }
+
+        return blogObject(data.split('---'));    
+    }
+</script>

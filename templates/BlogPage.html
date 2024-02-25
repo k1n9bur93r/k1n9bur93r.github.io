@@ -31,44 +31,43 @@ class dynContainer
         }
         dynData= [dynData];
         let dynTemplate = new dyn(templateUrl,false).GetStream();
-            for(data of dynData)
-            {
-                dynElements.push(new dynElement(data,dynTemplate));
-            }
-    
+        for(data of dynData)
+        {
+            dynElements.push(new dynElement(data,dynTemplate));
+        }
     }
     Init()
     {
-            let dataValue = document.getAttribute('data');
-            let isElement = false;
-            let isLoop= false;
-            isElement=dataValue.isNan ? true: false;
-            ifLoop= dataValue.split('...').length > 1;
-            let dynIndex = Number(dataValue.split('.')[0]);
-            let dynDataName = dataValue.split('.')[-1];
-            
-            if (isElement)
+        let dataValue = document.getAttribute('data');
+        let isElement = false;
+        let isLoop= false;
+        isElement=dataValue.isNan ? true: false;
+        ifLoop= dataValue.split('...').length > 1;
+        let dynIndex = Number(dataValue.split('.')[0]);
+        let dynDataName = dataValue.split('.')[-1];
+        
+        if (isElement)
+        {
+            element.appendChild(dynElments[dynIndex]);
+        }
+        else if(dynElement[0].Data.hasOwnProperty(dynDataName))
+        {
+            element.textContent = dynElement.Data[dynDataName];
+        }
+        else if(isLoop)
+        {
+            let splitArray = dataValue.split('...')
+            let startIndex= splitArray[0];
+            let endIndex = splitArray[1];
+            if(endIndex.isNan && endIndex.toLowerCase == 'n')
             {
-                element.appendChild(dynElments[dynIndex]);
+                endIndex = dynElements.length;
             }
-            else if(dynElement[0].Data.hasOwnProperty(dynDataName))
+            for(let index = startIndex;startIndex<endIndex;startIndex++)
             {
-                element.textContent = dynElement.Data[dynDataName];
+                element.appendChild(dynElements[index].Element)
             }
-            else if(isLoop)
-            {
-                let splitArray = dataValue.split('...')
-                let startIndex= splitArray[0];
-                let endIndex = splitArray[1];
-                if(endIndex.isNan && endIndex.toLowerCase == 'n')
-                {
-                    endIndex = dynElements.length;
-                }
-                for(let index = startIndex;startIndex<endIndex;startIndex++)
-                {
-                    element.appendChild(dynElements[index].Element)
-                }
-            }
+        }
     }
 
 }
