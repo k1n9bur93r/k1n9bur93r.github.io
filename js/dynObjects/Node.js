@@ -6,8 +6,6 @@ export class dynNode
     #Rules = new dynRules();
     constructor(domHook)
     {
-        //need to figure out how this part will work, probably can do some async stuff that happens in the BG as the tree is built? 
-        //this.#Dyn = dynPair;
         this.#DomHook= domHook;
         this.#DynAction = this.#Rules.CheckDynValue(domHook);
     }
@@ -112,21 +110,4 @@ export class dynNode
         let firstChild = this.#DomHook.firstChild;
         this.#DomHook.insertBefore(dynContent,firstChild);
     }
-       
-        
-
-        //we check if there is a morph, if there is then we make a new deep copy of our record and set it back to the plate,
-        //then we can check the show action to see if we even need to render the tree
-        /// ------IDEA to establish an order of operations we can stub out some code for dynExt we can give create different kinds of steps load, render, post render and then give an int to represent ordering
-        // we can look at what is inside of the dyn to build the JSON object we want to represent with our HTML (primarily if we are doing a single object, full list, or partial list)
-        // we can then start making the object based on the list
-        //the simple part here would be doing the thing where we bind items to props, but we probably need to do a bit more here first 
-    
 }
-
-//random ideas for extensions
-//dynAnim - cascading animations based on tree shape or some other things 
-//dynSelect - tools for parsing the dynTree to create custom sub trees of nodes
-//dynState - system for maintaing updates to dyn records (advanced) or at least ways to rerender subsections of the trees based on button clicks or somethin
-//dynGrid - this feels mostly like CSS stuff, could be neat if smart enough, but we don't want to make a bunch of wrappers for existing stuff
-//dynDebug - I want to make this, but i want there to be some cool things that devs can use to vizualize the dyn tree and other things 
