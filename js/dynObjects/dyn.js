@@ -1,6 +1,7 @@
 import { dynNode } from './Node.js';
 import { dynTree } from './Tree.js';
 
+
 document.addEventListener("DOMContentLoaded", BootStrapDyn);
 async function BootStrapDyn()
 {
@@ -38,8 +39,9 @@ export class Dyn
 
     async InitalizeDynApp()
     {
-        await this.traverseForDynTrees
+        await this.traverseForDynTrees(document.documentElement);
     }
+
     #generateGUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
           const r = (Math.random() * 16) | 0;
