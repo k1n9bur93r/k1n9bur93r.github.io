@@ -55,28 +55,15 @@
     </div>
 </body>
 <script>
-    function ParseForBlogs(data)
-    {
-        const blogObject = (sourceData) => { 
-            const createRegexForNthLineFeed = (source, n) => {
-                if (n < 0) throw new Error("The number of line breaks (n) must be greater than or equal to 1.");
-            
-                const lineBreaks = '.*\n'.repeat(n);
-                const regexPattern = new RegExp(`^${lineBreaks}(.*?)\\n`, 'm');
-                return regexPattern.exec(source)[1];
-            }
-            let blogs = new Array();
-            sourceData.forEach(item =>{
-                 blogs.push({
-                    Date:createRegexForNthLineFeed(item,0),
-                    Title:createRegexForNthLineFeed(item,1),
-                    Header:createRegexForNthLineFeed(item,2),
-                    Text:createRegexForNthLineFeed(item,3)
-                });
-            });
-            return blogs;
-        }
-
-        return blogObject(data.split('---'));    
+    function ParseForBlogs(data) {
+        return data
+            .split('---')
+            .map(section => section.split("\n"))
+            .map(lines => ({
+                Date: lines[0],
+                Title: lines[1],
+                Header: lines[2],
+                Text: lines[3]
+            }))
     }
 </script>
