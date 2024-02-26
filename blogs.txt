@@ -165,3 +165,8 @@ I am for sure not following my own advice when it comes to building feature by f
 Found my way back 
 New challenges 
 Okay I think I caught up to where I was last week lol. My initial plan was to perform validation and rendering as a post tree creation process, but now each node is handling itself as the tree is being built. I will never make anything that will benefit from any kind of optimization tricks…but hopefully the JavaScript looks cooler?
+
+---2/25/24
+FIRST PERSON COMPUTER
+i get it now…
+If you THINK about it. A 3D operating system (((visionOS))) it’s actually just fuckin Windows/MacOS. You have a desktop view in both, windows that you keep open. Though it’s nothing special because we can only keep those on the SCREEN. The windows now just float around in 3D space. It’s like you are in a little bubble of computer. It’s actually kind of cracked. If only we had access to a real file system and tools like macOS. So you could do real things natively. Oh man that would be sweet.
