@@ -85,15 +85,10 @@ export class dynRules
 
 
     //this might be misplaced, ignoring as part of the main attribute check loop 
-    CheckPlateHasProp(htmlText)
+    CheckPlateHasProp(htmlElement)
     {
-        
         const parser = new DOMParser();
-
-        // Parse the HTML text
-        const plate = parser.parseFromString(htmlText, "text/html");
-
-        //the following will not work since it's a text item and not a node 
+        const plate = parser.parseFromString(htmlElement, "text/html");
         const matchingPropElements = plate.querySelectorAll('[Prop]');
         if(matchingPropElements.length == 0)
         {

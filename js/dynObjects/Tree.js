@@ -68,8 +68,6 @@ export class dynTree{
 
         }
         loadedNode.RenderNode();
-        console.log(this.#RecordScopes);
-        console.log(this.#NonAccountedLeafs);
     }
 
 

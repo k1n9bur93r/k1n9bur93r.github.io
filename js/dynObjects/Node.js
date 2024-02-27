@@ -90,24 +90,18 @@ export class dynNode
         }
 
         let dynContent = document.createDocumentFragment();
-        for(let record of recordsToBind)
-        {
-            var plate = document.createElement('div');
-            plate.innerHTML = this.GetPlate();
-            let props = plate.querySelectorAll('[prop]');
-            for(var prop of props)
-            {
-                let name= prop.getAttribute('prop');
-                if(record[name] == undefined)
-                {
-                    console.warn(`Plate has no Prop associated with Record Property ${name}`);
-                }
-                let value = record[name];
-                prop.textContent= value;
-            }
-            dynContent.appendChild(plate)
-        }
         let firstChild = this.#DomHook.firstChild;
+        recordsToBind.forEach(record =>{
+
+            for (const property in record) {
+                this.#Dyn.Obj.props[property]=record[property];
+            }
+            let platePart = this.#Dyn.Obj.RenderPlate();
+            var plate = document.createElement('div');
+            plate.innerHTML=platePart;
+            dynContent.appendChild(plate);
+        })
+   
         this.#DomHook.insertBefore(dynContent,firstChild);
     }
 }
