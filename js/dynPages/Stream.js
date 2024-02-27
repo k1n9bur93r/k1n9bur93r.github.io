@@ -6,9 +6,10 @@ const dynStreamTypes = {
 
  class dynStream
 {
-
+    static CachedStreams = new Map();
     constructor(source,typeId)
     {
+
         this.StreamType = this.#GetType(typeId);
         this.Source=source;
     }
@@ -28,13 +29,38 @@ const dynStreamTypes = {
 
     #StreamType = [this.#Type("Record",dynStreamTypes.RECORD),this.#Type("Plate",dynStreamTypes.PLATE),this.#Type("Dyn",dynStreamTypes.DYN)]
 
-    #LocalStream = undefined;
+    #LocalStream = () =>  dynStream.CachedStreams.get(this.Source); //undefined;
+
+    #GetCachedStream(streamSource)
+    {
+        if(dynStream.CachedStreams.has(streamSource))
+        {
+            return dynStream.CachedStreams.get(streamSource);
+        }
+        else
+        {
+            dynStream.CachedStreams.set(streamSource,'undefined');
+        }
+    }
+
+    async #WaitTillFetched(key) {
+        while (true) {
+          const value = dynStream.CachedStreams.get(key);
+          if (value !== 'fetching') {
+            return value;
+          }
+          await new Promise(resolve => setTimeout(resolve, 5)); // Wait for 1 second before rechecking
+        }
+      }
+
     async Get(postFetchActn = (streamArg) => streamArg)
     {
-        if(this.#LocalStream)
+        if(this.#LocalStream())
         {
-            return this.#LocalStream;
+            await this.#WaitTillFetched(this.Source)
+            return this.#LocalStream(); 
         }
+        dynStream.CachedStreams.set(this.Source,'fetching');
 
         console.log(`Getting stream type ${this.StreamType.Name} for ${this.Source}`);
 
@@ -43,11 +69,12 @@ const dynStreamTypes = {
             if (!response.ok) {
                 throw new Error(`Invalid Stream Path. Failed to fetch ${this.StreamType.Name} from supplied path '${this.Source}'`);
             }
-            let responseTextType = undefined;
+
             return response.text()})
         .then(stream => { 
-            this.#LocalStream = postFetchActn(stream);
-            return this.#LocalStream;
+           let modifiedStream= postFetchActn(stream);
+            dynStream.CachedStreams.set(this.Source,modifiedStream);
+            return this.#LocalStream();
         });
 
     }

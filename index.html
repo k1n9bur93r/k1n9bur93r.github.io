@@ -116,13 +116,13 @@
         <hr>
         <div>
             <h1>Widgets</h1>
-           <div dyn plate="./templates/WeatherWidget.html" record="https://goweather.herokuapp.com/weather/lasvegas" style ="width: 300px;"></div>
+           <div dyn plate="./plates/WeatherWidget.html" record="https://goweather.herokuapp.com/weather/lasvegas" style ="width: 300px;"></div>
            </div>
 
         <div style=" display: flex; justify-content: start; align-items: center; flex-direction: row;">
             <h2>Past Blogs</h2>
         </div>
-        <div dyn="n-1...0" record="./blogs.txt" plate="./templates/BlogEntry.html" shape="ParseForBlogs" class="glassBG primary" style="height: 500px; overflow: scroll; " >
+        <div dyn="n-1...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs" class="glassBG primary" style="height: 500px; overflow: scroll; " >
         </div>
 
     </div>
