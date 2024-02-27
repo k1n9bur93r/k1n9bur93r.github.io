@@ -7,13 +7,23 @@
     <script type="module" src="js/dynObjects/dyn.js"></script>
 </head>
 <style>
-    h1,h2,h3,h4,p,a{ white-space: pre; }
+    h1,h2,h3,h4,a{ white-space: pre; }
 
     body {
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
+        background-image: linear-gradient(
+        345deg,
+        hsl(240deg 14% 97%) 0%,
+        hsl(302deg 40% 98%) 21%,
+        hsl(340deg 100% 98%) 36%,
+        hsl(17deg 100% 97%) 51%,
+        hsl(39deg 100% 96%) 67%,
+        hsl(55deg 92% 95%) 100%
+        );
     }
+    
     .container {
         width: 100%;
         max-width: 5000px;
@@ -31,36 +41,69 @@
             margin-right: 15px;
         }
     }
+.glassBG
+{
+    
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(7.6px);
+    color:rgb(19, 19, 19);
+    -webkit-backdrop-filter: blur(7.6px);
+    border: 1px solid rgba(79, 37, 102, 0.48);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.primary
+{
+    background: rgba(213, 223, 232, 0.75);
+}
+.secondary
+{
+    background: rgba(222, 201, 178, 0.75);
+}
+.white
+{
+    background: rgba(247, 252, 255, 0.80);
+}
+.row
+{
+    display: flex;
+    flex-direction: row;
+}
+
 </style>
 <body>
     <div class="container">
         <div class="content">
-    <h1>K1n9Bur93r</h1>
-    <p> Little projects and ideas in the hope of creating a good site. <a href="https://github.com/k1n9bur93r/k1n9bur93r.github.io/tree/main">Github</a></p>
-    <p> Current project: <strong>Dyn Static Site Templating System </strong></p>
-    <h3>Done Did</h3>
-    <ul>
-        <li> HTML Zen ☯️ ✅</li>
-        <li> No user facing JS ✅</li>
-        <li> Fetch local or external text/json data ✅</li>
-        <li> Locally created or fetched HTML templates ✅</li>
-    </ul>
-    <h3>To Do</h3>
-    <ul>
-        <li> 'Complex' Json Object support </li>
-        <li> Fetched Resource sharing between Dyns</li>
-        <li> Debug and Viz tools</li>
-        <li> Scoped CSS styles</li>
-        <li> Test and update where things feel iffy</li>
-    </ul>
-    <div>
-        <h1>Widgets</h1>
-        <div dyn plate="./templates/WeatherWidget.html" record="https://goweather.herokuapp.com/weather/lasvegas" style ="width: 300px;"></div>
+
+            <div class="glassBG white">
+                <h1>K1n9Bur93r</h1>
+                <p> Little projects and ideas in the hope of creating a good site. <a href="https://github.com/k1n9bur93r/k1n9bur93r.github.io/tree/main">Github</a></p>
+                <p> Current project: <strong>Dyn Static Site Templating System </strong></p>
+                <h3>Done Did</h3>
+                <ul>
+                    <li> HTML Zen ☯️ ✅</li>
+                    <li> No user facing JS ✅</li>
+                    <li> Fetch local or external text/json data ✅</li>
+                    <li> Locally created or fetched HTML templates ✅</li>
+                </ul>
+                <h3>To Do</h3>
+                <ul>
+                    <li> 'Complex' Json Object support </li>
+                    <li> Fetched Resource sharing between Dyns</li>
+                    <li> Debug and Viz tools</li>
+                    <li> Scoped CSS styles</li>
+                    <li> Test and update where things feel iffy</li>
+                </ul>
+            </div>
+
+
+
         <br>
-        <h1>Blogs</h1>
+        <h1>Newest Blog</h1>
         <hr>
         <div dyn="n" record="./blogs.txt" shape="ParseForBlogs">
-            <div style="background-color: papayawhip; border: 1px solid darkblue; padding:10px; ">
+            <div class="glassBG white">
                 <div >
                     <h3>Latest Blog- </h3> <h2 >{{Title}}</h2>
                 </div>
@@ -71,10 +114,15 @@
         </div>
 
         <hr>
+        <div>
+            <h1>Widgets</h1>
+           <div dyn plate="./templates/WeatherWidget.html" record="https://goweather.herokuapp.com/weather/lasvegas" style ="width: 300px;"></div>
+           </div>
+
         <div style=" display: flex; justify-content: start; align-items: center; flex-direction: row;">
             <h2>Past Blogs</h2>
         </div>
-        <div dyn="n-1...0" record="./blogs.txt" plate="./templates/BlogEntry.html" shape="ParseForBlogs" style="height: 500px; overflow: scroll; background-color: lightblue; border: 1px  solid maroon; padding: 10px;" >
+        <div dyn="n-1...0" record="./blogs.txt" plate="./templates/BlogEntry.html" shape="ParseForBlogs" class="glassBG primary" style="height: 500px; overflow: scroll; " >
         </div>
 
     </div>
