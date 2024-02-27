@@ -175,3 +175,7 @@ If you THINK about it. A 3D operating system (((visionOS))) it’s actually just
 dynPages 1.1
 Tinker Fast
 I think it's fun once you get past the 'design' in the specific way that building new ideas becomes a much quicker process. It's like you've gained a position of tinker power. I realized needing to do Prop="variablePropName" is a boring way to handle value setting. Now using a much more sensable {{variablePropName}}. Less of that is good. Also changed the way that the content of a dyn is rendered,uses some of the javascript soup magic that I LOVE. Didn't save much code but hooopefully it has some room for new features. Also added a bit more logic to for loops, you can iterate a list in reverse and set the distance from the last element you want to hit. like length-5. Kinda fun!
+---2/27/24
+dynPages 1.2
+Savant 
+A resource can be ‘cached, by storing the source in a hash table, then all other requests draw from the table. In the event that the data is not done fetching things idle till the map’s value updates…is this smart or stupid lol?
