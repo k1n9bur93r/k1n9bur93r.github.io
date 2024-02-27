@@ -178,4 +178,4 @@ I think it's fun once you get past the 'design' in the specific way that buildin
 ---2/27/24
 dynPages 1.2
 Savant 
-A resource can be ‘cached, by storing the source in a hash table, then all other requests draw from the table. In the event that the data is not done fetching things idle till the map’s value updates…is this smart or stupid lol?
+A resource can be ‘cached', by storing the source in a hash table, then all other requests draw from the table. In the event that the data is not done fetching things idle till the map’s value updates…is this smart or stupid lol?
