@@ -134,12 +134,12 @@ Meta is making some waves in the VR community based on their self description of
 ---1/31/24
 This should be Twitter
 Better heard than read 
-It is so cringe to have to go back and do massive rewrites of text to speech audio dumps for topics that I could probably convey better when talked about casually lmao!
+It's silly to have to go back and do massive rewrites of text to speech audio dumps for topics that I could probably convey better when talked about casually lmao!
 
 ---2/4/24
 Stop Selling me Shit
 Genuine products only 
-We have fallen into a trap of companies selling us shit that isn’t real. The business make no money, the products are good but unviable. Sell me the thing that can keep your company afloat, convince me THAT is good. Blitzscaling is so cringe…
+We have fallen into a trap of companies selling us shit that isn’t real. The business make no money, the products are good but unviable. Sell me the thing that can keep your company afloat, convince me THAT is good. Blitzscaling sucks! 
 
 ---2/6/24
 It works
@@ -170,3 +170,8 @@ Okay I think I caught up to where I was last week lol. My initial plan was to pe
 FIRST PERSON COMPUTER
 i get it now…
 If you THINK about it. A 3D operating system (((visionOS))) it’s actually just fuckin Windows/MacOS. You have a desktop view in both, windows that you keep open. Though it’s nothing special because we can only keep those on the SCREEN. The windows now just float around in 3D space. It’s like you are in a little bubble of computer. It’s actually kind of cracked. If only we had access to a real file system and tools like macOS. So you could do real things natively. Oh man that would be sweet.
+
+---2/26/24
+dynPages 1.1
+Tinker Fast
+I think it's fun once you get past the 'design' in the specific way that building new ideas becomes a much quicker process. It's like you've gained a position of tinker power. I realized needing to do Prop="variablePropName" is a boring way to handle value setting. Now using a much more sensable {{variablePropName}}. Less of that is good. Also changed the way that the content of a dyn is rendered,uses some of the javascript soup magic that I LOVE. Didn't save much code but hooopefully it has some room for new features. Also added a bit more logic to for loops, you can iterate a list in reverse and set the distance from the last element you want to hit. like length-5. Kinda fun!
