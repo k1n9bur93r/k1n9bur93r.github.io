@@ -28,14 +28,14 @@ export class dynActions
             }
         if(!reverseOrder)
         {
-            for(let index = startIndex; index<endIndex;index++)
+            for(let index = startIndex; index<=endIndex;index++)
             {
                 recordToRender.push(dynRecord[index])
             }
         }
         else
         {
-            for(let index = startIndex; index>endIndex;index--)
+            for(let index = startIndex; index>=endIndex;index--)
             {
                 recordToRender.push(dynRecord[index])
             }
