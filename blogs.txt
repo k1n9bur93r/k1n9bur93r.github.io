@@ -184,3 +184,8 @@ A resource can be ‘cached' by storing the source in a hash table, then all oth
 Match Results! 
 Big days still to come
 I love you Bita!!! Congrats on making it into residency, never a question! Now the next question will be answered this Friday…oh where did you match into? 
+
+---3/12/24
+dynPages 2.0?
+Believe it or not…
+After two weeks of toiling away, I think I was able to crack the problem I think! I need to do a fuck ton of clean up, but if the base is good then I will feel excited to hop back and build some new ideas laterrrrrr.
