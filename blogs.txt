@@ -193,4 +193,4 @@ After two weeks of toiling away, I think I was able to crack the problem I think
 ---3/14/24
 Vision Pro Blog! 
 Round Two…
-Getting Siri Shortcuts up and running on this has been a breeze I THINK. Glad that my Git app is available on the Vision Pro…how cool is that ! I need to figure out a way how to attach images or videos to these blogs hehe.
+Getting Siri Shortcuts up and running on this has been a breeze I THINK. Glad the iOS Git app I use is available on the Vision Pro…how cool is that ! I need to figure out a way how to attach images or videos to these blogs hehe.
