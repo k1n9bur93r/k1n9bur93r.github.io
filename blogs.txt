@@ -208,4 +208,4 @@ Justice, Gesaffelstein, Caravan Palace all of em dropping absolutely stellar mus
 ---3/22/24
 NoSQL Actually Sucks
 THINK about it 
-Not like, a super brave opinion this day and age…BUT still the amount of solutions that exist, just to handle the situation we have created for ourselves by blasting away massive JOSN blobs rather than the results from properly defined queries across a planned relational DB… 99.9% of us will not have user or data demands which would demand to loss of ACID transactions for the sake of scale.
+Not like, a super brave opinion this day and age…BUT still the amount of solutions that exist, just to handle the situation we have created for ourselves by blasting away massive JOSN blobs rather than the results from properly defined queries across a planned relational DB… 99.9% of us will not have user or data demands to justify the loss of ACID transactions for the sake of scale.
