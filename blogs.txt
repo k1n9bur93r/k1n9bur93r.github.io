@@ -209,3 +209,8 @@ Justice, Gesaffelstein, Caravan Palace all of em dropping absolutely stellar mus
 NoSQL Actually Sucks
 THINK about it 
 Not like, a super brave opinion this day and age…BUT still the amount of solutions that exist, just to handle the situation we have created for ourselves by blasting away massive JOSN blobs rather than the results from properly defined queries across a planned relational DB… 99.9% of us will not have user or data demands to justify the loss of ACID transactions for the sake of scale.
+
+---3/23/24
+DynPages 2.1
+End game! 
+First, I managed to get recursive structures working, which was a big lift. Now we can do nested objects, bigger lift than I expected lol, but also, I feel like I had the problem figured out way earlier, and it was just a matter of taking my time with implementation, I junked a lot less code this time around. Final step is to get arrays working. these will be difficult, because the challenge the fundamental assumption of every property having a name…fun.
