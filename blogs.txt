@@ -214,3 +214,8 @@ Not like, a super brave opinion this day and age…BUT still the amount of solut
 DynPages 2.1
 End game! 
 First, I managed to get recursive structures working, which was a big lift. Now we can do nested objects, bigger lift than I expected lol, but also, I feel like I had the problem figured out way earlier, and it was just a matter of taking my time with implementation, I junked a lot less code this time around. Final step is to get arrays working. these will be difficult, because the challenge the fundamental assumption of every property having a name…fun.
+
+---3/23/24
+Eat crumbs
+Do it
+You are a biped eat crumbs. If you see crumbs on the table, eat them you are more powerful than the crumbs eat the crumbs.
