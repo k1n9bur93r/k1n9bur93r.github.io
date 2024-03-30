@@ -219,3 +219,8 @@ First, I managed to get recursive structures working, which was a big lift. Now 
 Eat crumbs
 Do it
 You are a biped eat crumbs. If you see crumbs on the table, eat them you are more powerful than the crumbs eat the crumbs.
+
+---3/29/24
+DynPages 2.2
+🫵😂
+Okay, arrays are in. Solving these problems have turned my code into more and more of a mess. I hope to clean things up soon, then build out two more things in my head then we can call this ‘done’. Probably will set up a git hub page and do whatever silly open sourcing with it too. Then I can finally start touching my actual site again haha
