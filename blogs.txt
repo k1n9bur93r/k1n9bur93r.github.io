@@ -224,3 +224,8 @@ You are a biped eat crumbs. If you see crumbs on the table, eat them you are mor
 DynPages 2.2
 🫵😂
 Okay, arrays are in. Solving these problems have turned my code into more and more of a mess. I hope to clean things up soon, then build out two more things in my head then we can call this ‘done’. Probably will set up a git hub page and do whatever silly open sourcing with it too. Then I can finally start touching my actual site again haha
+
+---3/29/24
+Oh wait shit
+💀
+Okay there are like 4 or 5 things that still need to be done I think. THESE SHOULD BE EASIER PROBLEMS, so help me god lol
