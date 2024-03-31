@@ -1,19 +1,26 @@
 import { dynPair } from './Pair.js';
-import { dynRules } from './Rules.js';
+
 
 export class dynNode
 {
-    #Rules = new dynRules();
-    constructor(domHook)
+    constructor(htmlNode,parentNode = undefined)
     {
-        this.#DomHook= domHook;
-        this.#DynAction = this.#Rules.CheckDynValue(domHook);
+        if(parentNode)
+        {
+            if(!htmlNode.hasAttribute('record'))
+            {
+                htmlNode.setAttribute('record',parentNode.GetHook().getAttribute('record'));
+            }
+            dynNode.VerifyDynNodeType(parentNode);
+            parentNode.AddChild(this);
+            this.AddParent(parentNode);
+        }
+        this.#HtmlNode= htmlNode;
     }
-    #ChildDyns = new Array();
-    #ParentDyn = undefined;
-    #Dyn = undefined
-    #DomHook = undefined
-    #DynAction = undefined;
+    #ChildNodes = new Array();
+    #ParentNodes = undefined;
+    #Pair = undefined
+    #HtmlNode = undefined
 
     // Private Helper Methods
 
@@ -26,82 +33,79 @@ export class dynNode
     }
     //DynNode Related Methods
     //Parent Methods
-    GetParent = () => this.#ParentDyn;
-    HasParent = () => this.#ParentDyn != undefined ? true : false; 
+    GetParent = () => this.#ParentNodes;
+    HasParent = () => this.#ParentNodes != undefined ? true : false; 
     AddParent(parentDyn)
     {
-        this.#ParentDyn = parentDyn;
+        this.#ParentNodes = parentDyn;
     }
     //Child Methods
-    GetChildren = () => this.#ChildDyns;
-    HasChildren = () => this.#ChildDyns.length > 0 ? true : false;
+    GetChildren = () => this.#ChildNodes;
+    HasChildren = () => this.#ChildNodes.length > 0 ? true : false;
 
     AddChild(dynNodeChild)
     {
         dynNode.VerifyDynNodeType(dynNodeChild);
         dynNodeChild.AddParent(this);
-        this.#ChildDyns.push(dynNodeChild);
+        this.#ChildNodes.push(dynNodeChild);
     }
     //Html Element Hook Related Methods 
-    GetHook = () => this.#DomHook;
+    GetHook = () => this.#HtmlNode;
     // DynPair Related Methods 
 
     async SetDyn()
     { 
-        this.#Dyn = new dynPair();
-        await this.#Dyn.LoadPair(this.#DomHook)
-        return this;
+        this.#Pair = new dynPair();
+        await this.#Pair.LoadPair(this.#HtmlNode,this)
     }
 
     GetDyn()
     {
-        dynPair.VerifyDynPairType(this.#Dyn);
-        return this.#Dyn;
+        dynPair.VerifyDynPairType(this.#Pair);
+        return this.#Pair;
     }
     GetRecord()
     {
-        dynPair.VerifyDynPairType(this.#Dyn);
-        return this.#Dyn.GetRecord();        
+        dynPair.VerifyDynPairType(this.#Pair);
+        return this.#Pair.GetRecord();        
     }
     SetRecord(record)
     {
-        dynPair.VerifyDynPairType(this.#Dyn);
-        return this.#Dyn.SetRecord(record);        
+        dynPair.VerifyDynPairType(this.#Pair);
+        return this.#Pair.SetRecord(record);        
     }
     GetPlate()
     {
-        dynPair.VerifyDynPairType(this.#Dyn);
-        return this.#Dyn.GetPlate();        
+        dynPair.VerifyDynPairType(this.#Pair);
+        return this.#Pair.GetPlate();        
     }
     HasRecord = () => this.GetRecord() != undefined ? true : false;
     HasPlate = () => this.GetPlate() != undefined ? true : false;
 
-    RenderNode()
+    RenderNode(node)
     {
-        console.log("RENDERING")
-        let recordsToBind = new Array();
-        if(this.#DynAction)
+        let index = this.#Pair.GetIndex();
+        if(index)
         {
-            recordsToBind = this.#DynAction(this.#DomHook.getAttribute("dyn"),this.GetRecord());
-        }
-        else
-        {
-            recordsToBind = this.GetRecord();
-        }
-
-        let dynContent = document.createDocumentFragment();
-        let firstChild = this.#DomHook.firstChild;
-        recordsToBind.forEach(record =>{
-
-            for (const property in record) {
-                this.#Dyn.Obj.props[property]=record[property];
+            for (const property in this.GetRecord()[0]) {
+                this.#Pair.Obj.props[property]=this.GetRecord()[index][property];
             }
-            let platePart = this.#Dyn.Obj.RenderPlate();
-            var plate = document.createElement('div');
-            plate.innerHTML=platePart;
-            dynContent.appendChild(plate);
-        })
-   
-        this.#DomHook.insertBefore(dynContent,firstChild);
+                this.#HtmlNode.innerHTML=this.#Pair.Obj.RenderPlate();
+        }
+    }
+
+     createNodeFromHTML(htmlString,getDyn = true) {
+        const range = document.createRange();
+        range.selectNode(document.body);
+        const fragment = range.createContextualFragment(htmlString);
+        const container = document.createElement('div');
+        for(let frag of fragment.children)
+        {
+            if(frag.getAttribute('dyn') && getDyn)
+            {
+                container.appendChild(frag);
+            }
+        }
+        return container.firstChild;
     }
 }

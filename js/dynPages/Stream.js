@@ -29,19 +29,7 @@ const dynStreamTypes = {
 
     #StreamType = [this.#Type("Record",dynStreamTypes.RECORD),this.#Type("Plate",dynStreamTypes.PLATE),this.#Type("Dyn",dynStreamTypes.DYN)]
 
-    #LocalStream = () =>  dynStream.CachedStreams.get(this.Source); //undefined;
-
-    #GetCachedStream(streamSource)
-    {
-        if(dynStream.CachedStreams.has(streamSource))
-        {
-            return dynStream.CachedStreams.get(streamSource);
-        }
-        else
-        {
-            dynStream.CachedStreams.set(streamSource,'undefined');
-        }
-    }
+    Stream = () =>  dynStream.CachedStreams.get(this.Source); 
 
     async #WaitTillFetched(key) {
         while (true) {
@@ -49,32 +37,29 @@ const dynStreamTypes = {
           if (value !== 'fetching') {
             return value;
           }
-          await new Promise(resolve => setTimeout(resolve, 5)); // Wait for 1 second before rechecking
+          await new Promise(resolve => setTimeout(resolve, 5));
         }
       }
 
     async Get(postFetchActn = (streamArg) => streamArg)
     {
-        if(this.#LocalStream())
+        if(this.Stream())
         {
             await this.#WaitTillFetched(this.Source)
-            return this.#LocalStream(); 
+            return this.Stream(); 
         }
         dynStream.CachedStreams.set(this.Source,'fetching');
-
-        console.log(`Getting stream type ${this.StreamType.Name} for ${this.Source}`);
 
         return await fetch(this.Source)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Invalid Stream Path. Failed to fetch ${this.StreamType.Name} from supplied path '${this.Source}'`);
             }
-
             return response.text()})
         .then(stream => { 
            let modifiedStream= postFetchActn(stream);
             dynStream.CachedStreams.set(this.Source,modifiedStream);
-            return this.#LocalStream();
+            return this.Stream();
         });
 
     }

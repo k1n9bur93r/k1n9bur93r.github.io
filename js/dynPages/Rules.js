@@ -6,22 +6,21 @@ export class dynRules
     #Actions = new dynActions();
     #ServerPath = /^(\/[A-Za-z0-9_-]+)+\/[A-Za-z0-9_.-]+\.[A-Za-z]+$/;
     #Loop = /^(?:\d+|n(?:-\d+)?)\.{3}(?:\d+|n(?:-\d+)?)$/;
-    #Index = /^(?:\d+|n)$/;
+    #Index = /^(?:\d+|n(?:-\d+)?)$/;
     #WhiteSpace = /^\s*$/;
 
     #isWhitespace(str = " ") {
         return this.#WhiteSpace.test(str);
     }
 
-    CheckDynValue(htmlElement)
-    {
-        const dynAttributeValue = htmlElement.getAttribute('dyn');
+    CheckDynValue(dynAttributeValue)
+    {;
         //These can either return some kind of true, but would be cooler if they could return an action to take? 
         switch(true)
         {
             case dynAttributeValue == "":
                 {
-                    return undefined;
+                    return   (value, record)=> [0];
                     //break;
                 }
             case this.#ServerPath.test(dynAttributeValue):
@@ -66,7 +65,7 @@ export class dynRules
             console.warn(`%cWARNING: Referenced function does not exist for Dyn attribute action,${funcName} will be evaluated as a bool conditional.`, 'font-weight: bold; color: Orange;')
             return false;
         }
-        return true;
+        return true; 
     }
 
     CheckDynHasPlate(htmlElement,localPlate)

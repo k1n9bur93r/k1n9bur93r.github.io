@@ -21,18 +21,14 @@ export class dynTree{
     async SetRoot(rootNode)
     {
         this.#Tree =  rootNode;    
-        let node = await this.#Tree.SetDyn(); 
-        this.#ProcessNodeEvents(node)
     }
 
-    async SetChild(parentNode,childNode)
+    async SetChild(parentNode,childNode,postRender)
     {
         parentNode.AddChild(childNode);
-        let node = await childNode.SetDyn();
-        this.#ProcessNodeEvents(node)   
     }
 
-    #ProcessNodeEvents(loadedNode)
+    ProcessNodeEvents(loadedNode)
     {
         if(!loadedNode.HasRecord())
         {
@@ -42,7 +38,10 @@ export class dynTree{
             {
                 parentNode = parentNode.GetParent();
                 loadedNode.SetRecord(parentNode.GetRecord())
-            }while ((!parentNode.HasRecord() || parentNode.GetDyn().IsPlateInherited()) && parentNode.GetParent() != undefined )
+                
+            }while (
+                (parentNode && !parentNode.HasRecord()&& parentNode.GetDyn().IsPlateInherited() ) 
+                && parentNode.GetParent() != undefined )
             if(this.#RecordScopes.find(scope => scope.root == parentNode))
             {
                 this.#RecordScopes.find(scope => scope.root == parentNode).children.push(loadedNode);
@@ -51,6 +50,7 @@ export class dynTree{
             {
                 this.#NonAccountedLeafs.push({leaf:loadedNode,recordRoot:parentNode});
             }
+
         }
         else if(loadedNode.HasRecord())
         {
@@ -65,9 +65,7 @@ export class dynTree{
                 }
             }
             this.#NonAccountedLeafs = this.#NonAccountedLeafs.filter(node =>!foundLeafs.includes(node));
-
         }
-        loadedNode.RenderNode();
     }
 
 
