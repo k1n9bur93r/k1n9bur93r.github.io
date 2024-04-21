@@ -12,7 +12,7 @@ async function RecurseForDyns(htmlnode, currentNode = undefined)
            {
                Trees.push(newNode);
            }
-           await newNode.SetDyn();
+           await newNode.LoadNoad();
            currentNode = newNode;
        }
 
@@ -27,13 +27,217 @@ async function BootStrapDyn()
     await RecurseForDyns(document.documentElement);
 }
 
-
-
-
- class dynNode
+class dynPlate
 {
-    #Pair = undefined
-    #HtmlNode = undefined
+    PlateObj = {Props: [], RecordDepth : undefined, Template: "",Render: "",};
+    PlateSubDyn = new Array()
+    #PlateKey = undefined;
+    #CreatePlateObjItem = (propValue,recordIndex) => ({value:propValue,isArray:false,arrayValues:[],recordIndexPath:recordIndex});
+
+    RenderPlate (arrayPropIndex) 
+    {
+        let plateToRender = this.PlateObj.Template;
+        for (const [propName] of Object.entries(this.PlateObj.Props)) {
+            if( typeof this.PlateObj.Props[propName].value == "object")
+            {
+                console.warn("Can't bind an object to a plate")
+            }
+            plateToRender = plateToRender.replace(new RegExp(`{{${propName}}}`, 'g'), 
+            this.PlateObj.Props[propName].isArray ? this.PlateObj.Props[propName].arrayValues[arrayPropIndex] : this.PlateObj.Props[propName].value);
+        };
+        this.PlateObj.Render = plateToRender;
+    }
+
+    BindRecordToProps (record, recordIndices) 
+    {
+        for (let propertyString in this.PlateObj.Props) {
+            let properties = propertyString.split('.');
+            let y = 0;
+            let result = record;
+            for (let i = 0; i < properties.length; i) {
+                var property = properties[i];
+                if (Array.isArray(result)) {
+                    result = result[recordIndices[y]];
+                    y++;
+                } else {
+                    result = result[property];
+                    i++;
+                }
+                if (result === undefined || result === null) {
+                    break; //throw and error here 
+                }
+            }
+            if(Array.isArray(result))
+            {
+                this.PlateObj.Props[propertyString].arrayValues = result;
+                this.PlateObj.Props[propertyString].isArray = true;
+            }
+            this.PlateObj.Props[propertyString].value = result;  
+        }
+    }
+
+    async ParsePlate(htmlElement) 
+    {
+        if (htmlElement.hasAttribute('plate')) 
+        {
+            let externalPlate = await new dynStream(htmlElement.getAttribute('plate'), dynStreamTypes.PLATE).Get()
+            htmlElement.innerHTML = externalPlate;
+        }
+        this.#PlateKey = this.GenerateGUID();
+        await this.#ParsePlateForProps(htmlElement);
+        this.PlateObj.Template = htmlElement.innerHTML;
+        htmlElement.innerHTML = "";
+    }
+
+    async #ParsePlateForProps(parentElement)
+    {
+        let hasDyn = false;
+        for (let i = 0; i < parentElement.childNodes.length; i++) {
+            const childHtmlNode = parentElement.childNodes[i];
+
+            if (childHtmlNode.nodeType === 1) 
+            {
+                if (childHtmlNode.hasAttribute('dyn')) 
+                {
+                    hasDyn = true;
+                    childHtmlNode.innerText.match(/{{.*\..*}}/) ?     childHtmlNode.setAttribute('recordIndex','') :undefined; 
+                    childHtmlNode.setAttribute('plateindex', `${this.PlateSubDyn.length}`);
+                    childHtmlNode.setAttribute('key',this.#PlateKey);
+                    this.PlateSubDyn.push(childHtmlNode.cloneNode(true));
+                    childHtmlNode.innerHTML = "";
+                } 
+                else if (!await this.#ParsePlateForProps(childHtmlNode) && childHtmlNode.innerText && childHtmlNode.innerText.match(/^{{([^\}]+)}}$/)) 
+                {
+                    const text = childHtmlNode.innerText.match(/\{\{(.*?)\}\}/)[1].trim();
+                    const hasExistingProp = this.PlateObj.Props[text] !== undefined;
+                    this.PlateObj.Props[text] = hasExistingProp ? this.PlateObj.Props[text] : [];
+                    const hasRecordDepth = this.PlateObj.RecordDepth !== undefined;
+                    this.PlateObj.RecordDepth = hasRecordDepth ? this.PlateObj.RecordDepth : text;
+                    this.PlateObj.Props[text].push(this.#CreatePlateObjItem(text,childHtmlNode.getAttribute('recordIndex')));  
+                }
+            }
+        }
+        return hasDyn;
+    }
+
+    GenerateGUID() {
+        return 'xxxxxxxx'.replace(/[xy]/g, function (c) {
+            const r = (Math.random() * 16) | 0;
+            const v = c === 'x' ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+        });
+    }
+}
+
+class dynPair
+{
+    #Rules = new dynRules();
+    #Plate = new dynPlate();
+    #Record = new dynRecord(this.#Rules);
+
+    async CreatePair(htmlNode) {
+        await this.#Record.ParseRecord(htmlNode);
+        await this.#Plate.ParsePlate(htmlNode);
+        await this.#RenderPair(htmlNode);
+    }
+
+    async #RenderPair (htmlElement)  {
+        let getIndex = this.#Rules.CheckDynValue(htmlElement.getAttribute('dyn'));
+        let indexToLoopOn = htmlElement.hasAttribute('recordIndex') ? htmlElement.getAttribute('recordIndex').split(',') : [];
+        let recordLevel = this.#Record.GetRecordLoopingLength(this.#Plate.PlateObj.RecordDepth,indexToLoopOn);
+        let indexs = getIndex(htmlElement.getAttribute('dyn'), recordLevel);
+
+        for(let i =0; i < indexs.length;i++)
+        {
+            let recordIndices =htmlElement.hasAttribute('recordIndex') ? htmlElement.getAttribute('recordIndex').split(',') :[];
+            recordIndices.push(indexs[i]);
+            let plateCopy = document.createElement('div');
+            plateCopy.id = `${this.#Plate.GenerateGUID()}#${indexs[i]}`;
+            this.#Plate.BindRecordToProps(this.#Record.Record,recordIndices);
+            this.#Plate.RenderPlate(indexs[i]);
+            plateCopy.innerHTML = this.#Plate.PlateObj.Render;
+
+            plateCopy.querySelectorAll(`[recordIndex]`).forEach(dyn =>{
+                dyn.getAttribute('key') == this.#Plate.PlateKey ? dyn.setAttribute('recordIndex', dyn.getAttribute('recordIndex').concat(recordIndices)) : null;
+            })
+            htmlElement.appendChild(plateCopy);
+        }
+        
+        for(let index = 0; index < this.#Plate.PlateSubDyn.length;index++)
+        {
+        htmlElement.querySelectorAll(`[plateindex="${index}"]`).forEach(dyn =>{
+            dyn.innerHTML = this.#Plate.PlateSubDyn[index].innerHTML;
+        });
+        }
+    }
+}
+
+//started to move things into their own appropriate classes n stuff, or we can just uncomment an chill 
+class dynRecord
+{
+    Record = undefined;
+    #Rules = undefined;
+    constructor (rules)
+    {
+        this.#Rules = rules;
+    }
+
+    async ParseRecord(htmlElement) {
+        let postLoadAtn = (record) => {
+
+            let parsedRecord = JSON.parse(record)
+            if(!Array.isArray(parsedRecord))
+            {
+                parsedRecord = [parsedRecord];
+            }
+            return parsedRecord;
+        }
+        if (this.#Rules.CheckFuncExists(htmlElement, 'shape')) {
+            postLoadAtn = window[htmlElement.getAttribute('shape')];
+        }
+        if( this.#Rules.CheckServerPath(htmlElement.getAttribute('record')))
+        {
+            this.Record = await new dynStream(htmlElement.getAttribute('record'), dynStreamTypes.RECORD).Get(postLoadAtn);
+        }
+        else if (window[htmlElement.getAttribute('record')])
+        {
+            this.Record = postLoadAtn(window[htmlElement.getAttribute('record')]);
+        }
+    }
+
+
+    GetRecordLoopingLength(recordPath, recordIndices) {
+        if (recordIndices.length == 0)
+        {
+            return this.Record;
+        }
+
+        const properties = recordPath.split('.');
+        let result = this.Record;
+        properties.forEach(property => {
+            if (Array.isArray(result)) {
+                if (recordIndices.length === 0) {
+                    throw new Error(`No indices provided for array access in '${recordPath}'`);
+                }
+                const index = recordIndices.shift();
+                result = result[index];
+            } else {
+                result = result[property];
+            }
+            if (result === undefined || result === null) {
+                throw new Error(`Record structure does not match with provided path '${recordPath}', indices '${recordIndices}'`);
+            }
+        });
+
+        return result;
+    }
+}
+
+ class dynNode {
+    #ParentNodes = undefined;
+    #ChildNodes = new Array();
+    #Pair = new dynPair();
+    #HtmlNode= undefined
 
     constructor(htmlNode,parentNode = undefined)
     {
@@ -43,243 +247,34 @@ async function BootStrapDyn()
             {
                 htmlNode.setAttribute('record',parentNode.GetHook().getAttribute('record'));
             }
-            dynNode.VerifyDynNodeType(parentNode);
             parentNode.AddChild(this);
             this.AddParent(parentNode);
         }
         this.#HtmlNode= htmlNode;
     }
-
-    async SetDyn()
-    { 
-        this.#Pair = new dynPair();
-        await this.#Pair.LoadPair(this.#HtmlNode,this)
-    }
-}
- class dynPair {
-    #Rules = new dynRules();
-    #Record = undefined;
-    #PlateObj = {Props: [], RecordDepth : undefined, Template: "",Render: "",};
-    #PlateSubDyn = new Array();
-    #PlateKey = undefined;
-
-    static VerifyDynPairType(objectToCheck) {
-        if (!objectToCheck instanceof dynPair) {
-            throw Error('Object is not of type dynPair');
-        }
-    }
-
-    async LoadPair(htmlElement) {
-        await this.#ParseRecord(htmlElement);
-        await this.#ParsePlate(htmlElement);
-        await this.#RenderDyn(htmlElement);
-    }
-
-#CreatePlateObjItem = (propValue,recordIndex) => ({value:propValue,isArray:false,arrayValues:[],recordIndexPath:recordIndex});
-
-RenderPlate (arrayPropIndex, plateObj) 
-{
-    let plateToRender = plateObj.Template;
-    for (const [propName] of Object.entries(plateObj.Props)) {
-        if( typeof plateObj.Props[propName].value == "object")
-        {
-            console.warn("Can't bind an object to a plate")
-        }
-        plateToRender = plateToRender.replace(new RegExp(`{{${propName}}}`, 'g'), 
-        plateObj.Props[propName].isArray ? plateObj.Props[propName].arrayValues[arrayPropIndex] : plateObj.Props[propName].value);
-    };
-    plateObj.Render = plateToRender;
-}
-
-BindRecordToProps (plateObj, record, recordIndices) 
-{
-    for (let propertyString in plateObj.Props) {
-        let properties = propertyString.split('.');
-        let y = 0;
-        let result = record;
-        for (let i = 0; i < properties.length; i) {
-            var property = properties[i];
-            if (Array.isArray(result)) {
-                result = result[recordIndices[y]];
-                y++;
-            } else {
-                result = result[property];
-                i++;
-            }
-            if (result === undefined || result === null) {
-                break; //throw and error here 
-            }
-        }
-        if(Array.isArray(result))
-        {
-            plateObj.Props[propertyString].arrayValues = result;
-            plateObj.Props[propertyString].isArray = true;
-        }
-        plateObj.Props[propertyString].value = result;  
-    }
-}
-
-#GetRecordLoopingLength(record, recordPath, recordIndices) {
-    const properties = recordPath.split('.');
-    let result = record;
-
-    properties.forEach(property => {
-        if (Array.isArray(result)) {
-            if (recordIndices.length === 0) {
-                throw new Error(`No indices provided for array access in '${recordPath}'`);
-            }
-            const index = recordIndices.shift();
-            result = result[index];
-        } else {
-            result = result[property];
-        }
-        if (result === undefined || result === null) {
-            throw new Error(`Record structure does not match with provided path '${recordPath}', indices '${recordIndices}'`);
-        }
-    });
-
-    return result;
-}
-
-
-async #ParseRecord(htmlElement) {
-    let postLoadAtn = (record) => {
-
-        let parsedRecord = JSON.parse(record)
-        if(!Array.isArray(parsedRecord))
-        {
-            parsedRecord = [parsedRecord];
-        }
-        return parsedRecord;
-    }
-    if (this.#Rules.CheckFuncExists(htmlElement, 'shape')) {
-        postLoadAtn = window[htmlElement.getAttribute('shape')];
-    }
-    if( this.#Rules.CheckServerPath(htmlElement.getAttribute('record')))
+    LoadNoad()
     {
-        this.#Record = await new dynStream(htmlElement.getAttribute('record'), dynStreamTypes.RECORD).Get(postLoadAtn);
+        this.#Pair.CreatePair(this.#HtmlNode);
     }
-    else if (window[htmlElement.getAttribute('record')])
+   
+    AddParent(parentDyn)
     {
-        this.#Record = postLoadAtn(window[htmlElement.getAttribute('record')]);
+        this.#ParentNodes = parentDyn;
     }
-}
 
-#RenderDyn = async (htmlElement) => {
-    let getIndex = this.#Rules.CheckDynValue(htmlElement.getAttribute('dyn'));
-    let indexToLoopOn = [];
-    let recordLevel = this.#Record;
-    if(htmlElement.hasAttribute('recordIndex')  )
+    AddChild(dynNodeChild)
     {
-        indexToLoopOn = htmlElement.getAttribute('recordIndex').split(',');
-        recordLevel = this.#GetRecordLoopingLength(this.#Record,this.#PlateObj.RecordDepth,indexToLoopOn);
-    }
-    let indexs = getIndex(htmlElement.getAttribute('dyn'), recordLevel);
-    for(let i =0; i < indexs.length;i++)
-    {
-        let recordIndices =[];
-        if(htmlElement.hasAttribute('recordIndex'))
-        { 
-            recordIndices = htmlElement.getAttribute('recordIndex').split(',');
-        }
-        recordIndices.push(indexs[i]);
-        let plateCopy = document.createElement('div');
-        plateCopy.id = `${this.#generateGUID()}#${indexs[i]}`;
-        this.BindRecordToProps(this.#PlateObj,this.#Record,recordIndices);
-        this.RenderPlate(indexs[i],this.#PlateObj);
-        plateCopy.innerHTML = this.#PlateObj.Render;
-        plateCopy.querySelectorAll(`[recordIndex]`).forEach(dyn =>{
-            if(dyn.getAttribute('key') == this.#PlateKey)
-            {
-                dyn.setAttribute('recordIndex', dyn.getAttribute('recordIndex').concat(recordIndices))
-            }
-        })
-        htmlElement.appendChild(plateCopy);
-    }
-    
-    for(let index = 0; index < this.#PlateSubDyn.length;index++)
-    {
-       let foundDyns = htmlElement.querySelectorAll(`[plateindex="${index}"]`);
-
-       foundDyns.forEach(dyn =>{
-        dyn.innerHTML = this.#PlateSubDyn[index].innerHTML;
-       });
-
+        dynNodeChild.AddParent(this);
+        this.#ChildNodes.push(dynNodeChild);
     }
 }
 
-async #ParsePlate(htmlElement) 
-{
-    if (htmlElement.hasAttribute('plate')) 
-    {
-        let externalPlate = await new dynStream(htmlElement.getAttribute('plate'), dynStreamTypes.PLATE).Get()
-        htmlElement.innerHTML = externalPlate;
-    }
-    this.#PlateKey = this.#generateGUID();
-    await this.#ParsePlateForProps(htmlElement,this.#PlateObj);
-    this.#PlateObj.Template = htmlElement.innerHTML;
-    htmlElement.innerHTML = "";
-}
-
-async #ParsePlateForProps(parentElement, plateObj)
-{
-    let hasDyn = false;
-    for (let i = 0; i < parentElement.childNodes.length; i++) {
-        const childHtmlNode = parentElement.childNodes[i];
-
-        if (childHtmlNode.nodeType === 1) 
-        {
-            if (childHtmlNode.hasAttribute('dyn')) 
-            {
-                hasDyn = true;
-                if(childHtmlNode.innerText.match(/{{.*\..*}}/))
-                {
-                    childHtmlNode.setAttribute('recordIndex','');
-                }
-                childHtmlNode.setAttribute('plateindex', `${this.#PlateSubDyn.length}`);
-                childHtmlNode.setAttribute('key',this.#PlateKey);
-                this.#PlateSubDyn.push(childHtmlNode.cloneNode(true));
-                childHtmlNode.innerHTML = "";
-            } 
-            else 
-            {
-                let dynChildFound = await this.#ParsePlateForProps(childHtmlNode,plateObj);
-                if (!dynChildFound) 
-                {
-                    if (childHtmlNode.innerText && childHtmlNode.innerText.includes("{{") && childHtmlNode.innerText.includes("}}") && childHtmlNode.innerText.match(/\{\{(.*?)\}\}/g).length == 1) 
-                    {
-                        const text = childHtmlNode.innerText.match(/\{\{(.*?)\}\}/)[1].trim();
-                        if(plateObj.Props[text] == undefined)
-                        {
-                            plateObj.Props[text] = new Array();
-                        }
-                        if(plateObj.RecordDepth == undefined)
-                        {
-                            plateObj.RecordDepth = text;
-                        }
-                        plateObj.Props[text].push(this.#CreatePlateObjItem(text,childHtmlNode.getAttribute('recordIndex')));  
-                    }
-                }
-            }
-        }
-    }
-    return hasDyn;
-}
-
-#generateGUID() {
-    return 'xxxxxxxx'.replace(/[xy]/g, function (c) {
-        const r = (Math.random() * 16) | 0;
-        const v = c === 'x' ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-    });
-}
-
-}
 const dynStreamTypes = {
     RECORD: 0,
     PLATE: 1,
     DYN: 3
 };
+
  class dynStream
 {
     static CachedStreams = new Map();
@@ -341,9 +336,10 @@ const dynStreamTypes = {
     }
 
 }
+
  class dynRules 
 {
-    #Actions = new dynActions();
+    #Bind = new dynBind();
     #ServerPath = /^(.+)\/([^\/]+)$/;
     #Loop = /^(?:\d+|n(?:-\d+)?)\.{3}(?:\d+|n(?:-\d+)?)$/;
     #Index = /^(?:\d+|n(?:-\d+)?)$/;
@@ -371,12 +367,12 @@ const dynStreamTypes = {
                 }
             case this.#Loop.test(dynAttributeValue):
                 {
-                    return this.#Actions.BindLoop.bind(this.#Actions);
+                    return this.#Bind.BindLoop.bind(this.#Bind);
                     //break;
                 }
             case this.#Index.test(dynAttributeValue):
                 {
-                    return this.#Actions.BindIndex.bind(this.#Actions)
+                    return this.#Bind.BindIndex.bind(this.#Bind)
                     //break;
                 }
             default:
@@ -427,7 +423,7 @@ const dynStreamTypes = {
 
     }
 }
-class dynActions
+class dynBind
 {
     BindLoop(dynAtrValue,record)
     {
@@ -506,47 +502,5 @@ class dynActions
     #PerformNCalculation(number, nMath) {
         var nCalc = nMath.replace(/n/g, number);    
         return Number(eval(nCalc));
-    }
-    GetIteration = (dynAtrValue, record) =>
-    ({ action:dynAtrValue,iter:this.#GeIterationFromBindOrIndex(dynAtrValue)})
-
-    #GeIterationFromBindOrIndex(dynAtrValue)
-    {
-        if(dynAtrValue.includes('...'))
-        {
-            let start = dynAtrValue.split('...')[0];
-            let end = dynAtrValue.split('...')[1];
-            if(start.length == 1)
-            {
-                if(isNaN(start))
-                {
-                    start = 0
-                }
-            }
-            else
-            {
-                start = this.#PerformNCalculation(0,start);   
-            }
-            if(end.length == 1)
-            {
-                if(isNaN(end))
-                {
-                    end = 0
-                }
-            }
-            else
-            {
-                end = this.#PerformNCalculation(0,end);   
-            }
-            return Math.abs(Math.abs(start)-Math.abs(end));
-        }
-        else
-        {
-            if(isNaN(dynAtrValue))
-            {
-                return 1
-            }
-            return dynAtrValue;
-        }
     }
 }
