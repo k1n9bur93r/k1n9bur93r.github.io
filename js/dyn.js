@@ -218,7 +218,7 @@ class DynRecord {
 class DynNode {
   #ParentNodes = undefined;
 
-  #ChildNodes = new Array();
+  #ChildNodes = [];
 
   #Pair = new DynPair();
 
@@ -422,11 +422,11 @@ class DynBind {
   }
 
   BindIndex(dynAtrValue, dynRecord) {
-    if (Number.isNaN(dynAtrValue)) {
+    if (isNaN(dynAtrValue)) {
       dynAtrValue = this.#GetNValue(dynAtrValue, dynRecord);
     }
 
-    if (Number.isNaN(dynAtrValue) && (dynAtrValue < 0 || dynAtrValue > dynRecord.length)) {
+    if (isNaN(dynAtrValue) && (dynAtrValue < 0 || dynAtrValue > dynRecord.length)) {
       throw new Error('Invalid index specified ');
     }
     return [dynAtrValue];
