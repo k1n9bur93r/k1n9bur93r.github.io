@@ -229,3 +229,8 @@ Okay, arrays are in. Solving these problems have turned my code into more and mo
 Oh wait shit
 💀
 Okay there are like 4 or 5 things that still need to be done I think. THESE SHOULD BE EASIER PROBLEMS, so help me god lol
+
+---4/23/24
+Config Files…
+The forever pain 
+I have spent many hours these past two weeks attempting to debug remote builds, this is some of the most soul sucking work :(
