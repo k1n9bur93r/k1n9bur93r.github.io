@@ -1,70 +1,316 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K1n9's blog space</title>
     <script type="module" src="js/dyn.js"></script>
-    <link rel="stylesheet" href="/css/site.css">
-</head>
-<body>
-    <div class="container">
-        <div class="content">
+    <style>
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        a,
+        p,
+        li,
+        sub {
+            color: white
+        }
 
-            <div class="glassBG white">
-                <h1>K1n9Bur93r</h1>
-                <p> Little projects and ideas in the hope of creating a good site. <a href="https://github.com/k1n9bur93r/k1n9bur93r.github.io/tree/main">Github</a></p>
-                <p> Current project: <strong>'DynPages' Static Templating System </strong></p>
-                <h3>Done Did</h3>
-                <ul>
-                    <li> HTML Zen ☯️ ✅</li>
-                    <li> No user facing JS ✅</li>
-                    <li> Fetch local or external text/json data ✅</li>
-                    <li> Locally created or fetched HTML templates ✅</li>
-                    <li> Fetched Resource sharing between Dyns ✅</li>
-                </ul>
-                <h3>Wants </h3>
-                <ul>
-                    <li> Debug and Viz tools</li>
-                    <li> Test and update where things feel iffy</li>
-                </ul>
+   
+
+        body,
+        html {
+            height: 100%;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Full-screen canvas for starry background */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Keep it behind all content */
+        }
+
+        /* Smooth scrolling behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        /* Your existing CSS for larger screens */
+        .content {
+            margin-left: 15%;
+            margin-right: 15%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        /* Media query for tablets and mobile devices */
+        @media screen and (max-width: 768px) {
+            .content {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+        }
+
+        /* Media query for very small mobile devices */
+        @media screen and (max-width: 480px) {
+            .content {
+                margin-left: 3%;
+                margin-right: 3%;
+            }
+        }
+
+        .glassBG {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4.5px);
+            -webkit-backdrop-filter: blur(4.5px);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+
+        }
+
+        .HeaderGlass {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4.5px);
+            -webkit-backdrop-filter: blur(4.5px);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+
+        }
+
+        .glassBG p {
+            line-height: 1.6;
+            margin-bottom: 1.2em;
+            font-size: 0.95em;
+            color: white;
+            text-indent: 1em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Canvas for the starry background -->
+    <canvas></canvas>
+
+    <!-- Dynamic static sections -->
+    <div class="content">
+        <div class="HeaderGlass">
+            <h1>K1n9Bur93r</h1>
+            <p> Little projects and ideas in the hope of creating a good site. <a
+                    href="https://github.com/k1n9bur93r/k1n9bur93r.github.io/tree/main">Github</a></p>
+            <p> Current project: <strong>Proper website with actual inspired design</strong></p>
+            <h3>Cool note about this site, it is built with a custom templating system I call 'DynPages'</h3>
+            <p> It features the following!</p>
+            <ul>
+                <li> HTML Zen ☯️ ✅</li>
+                <li> No user facing JS ✅</li>
+                <li> Fetch local or external text/json data ✅</li>
+                <li> Locally created or fetched HTML templates ✅</li>
+                <li> Fetched Resource sharing between Dyns ✅</li>
+            </ul>
+            <p> Basically Mustache.Js though without ever having seen how that was built...so it's probably worse, but also unique! </p>
+            <sub> Background Animation By 'Merve' <a href="https://codepen.io/mervedurdagi/pen/PWzmZR">Lifted From CodePen </a>Modified by ChatGPT and I with Wuv</sub>
+
+           
+        </div>
+
+
+        <div class="glassBG">
+            <h4>Blog Spotlight</h4>
+            <h1> Apple's September 2024 iPhone Event</h1>
+            <div>
+            <div dyn="57" record="./blogs.txt" shape="ParseForBlogs">
+                <sub>{{Date}}</sub>
+                <h2>{{Header}}</h2> 
+                <p>{{Text}}</p>
             </div>
-        <br>
-        <h1>Newest Blog</h1>
+            <div dyn="56...52" record="./blogs.txt" shape="ParseForBlogs">
+                <h3>{{Header}}</h3> 
+                <p>{{Text}}</p>
+            </div>
+            </div>
+        </div>
+
+        <!-- <h1>Newest Blog</h1>
         <hr>
         <div dyn="n" record="./blogs.txt" shape="ParseForBlogs">
-            <div class="glassBG white">
-                <div >
-                    <h3>Latest Blog- </h3> <h2 >{{Title}}</h2>
+            <div class="glassBG">
+                <div>
+                    <h3>Latest Blog- </h3>
+                    <h2>{{Title}}</h2>
                 </div>
-                <h3  syle="padding-top:0px;">{{Header}}</h3>
-                <p >{{Text}}</p>
-                <sub><em ></em>{{Date}}</sub>
+                <h3 syle="padding-top:0px;">{{Header}}</h3>
+                <p>{{Text}}</p>
+                <sub><em></em>{{Date}}</sub>
             </div>
         </div>
+        <br>
+        <hr> -->
 
-        <hr>
-        <div>
 
-        <div style=" display: flex; justify-content: start; align-items: center; flex-direction: row;">
-            <h2>Past Blogs</h2>
-        </div>
-        <div dyn="n-1...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs" class="glassBG primary" style="height: 500px; overflow: scroll; " >
-        </div>
-
+        <h2>Past Blogs</h2>
+        <!-- <div dyn="n-1...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs"></div> -->
+        <div dyn="n-6...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs"></div>
     </div>
     </div>
-</body>
-<script>
-    function ParseForBlogs(data) {
-        return data
-            .split('---')
-            .map(section => section.split("\n"))
-            .map(lines => ({
-                Date: lines[0],
-                Title: lines[1],
-                Header: lines[2],
-                Text: lines[3]
-            }))
+
+    <script>
+
+        function ParseForBlogs(data) {
+            return data
+                .split('---')
+                .map(section => section.split("\n"))
+                .map(lines => ({
+                    Date: lines[0],
+                    Title: lines[1],
+                    Header: lines[2],
+                    Text: lines[3]
+                }))
+        }
+
+        // Starry Background Animation Code
+        // Created By 'Merve'
+        //Lifted From https://codepen.io/mervedurdagi/pen/PWzmZR
+        var n_stars = 150;
+        var n_stars = 150;
+var colors = ['#ba2356', '#fb9b39'];
+for (let i = 0; i < 3; i++) {
+    colors.push('#fff');
+}
+
+var canvas = document.querySelector('canvas');
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+
+addEventListener('resize', () => {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+    stars = [];
+    init();
+});
+
+canvas.style.background = '#000';
+var c = canvas.getContext('2d');
+
+const randomInt = (max, min) => Math.floor(Math.random() * (max - min) + min);
+
+var bg = c.createRadialGradient(canvas.width / 2, canvas.height * 2, canvas.height, canvas.width / 2, canvas.height, canvas.height * 4);
+bg.addColorStop(0, "#300d82");
+bg.addColorStop(.4, "#000814");
+bg.addColorStop(.8, "#000814");
+bg.addColorStop(1, "#000");
+
+class Star {
+    constructor(x, y, radius, color, dy = -Math.random() * .3, dx = 0) {
+
+        if(dx != 0)
+        {
+            dx = dx -Math.random();
+        }
+
+        this.x = x || randomInt(0, canvas.width);
+        this.y = y || randomInt(0, canvas.height);
+        this.radius = radius || Math.random() * 1.1;
+        this.color = color || colors[randomInt(0, colors.length)];
+        this.dy = dy; // Speed for each star
+        this.dx =dx
     }
-</script>
+
+    draw() {
+        c.beginPath();
+        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        c.shadowBlur = randomInt(3, 15);
+        c.shadowColor = this.color;
+        c.strokeStyle = this.color;
+        c.fillStyle = 'rgba(255, 255, 255, .5)';
+        c.fill();
+        c.stroke();
+        c.closePath();
+    }
+
+    update(arrayStars = []) {
+        if (this.y - this.radius < 0) this.createNewStar(arrayStars);
+        this.y += this.dy;
+        this.x +=this.dx;
+        this.draw();
+    }
+
+    createNewStar(arrayStars = []) {
+        let i = arrayStars.indexOf(this);
+        arrayStars.splice(i, 1);
+        arrayStars.push(new Star(false, canvas.height + 5, undefined, undefined, this.dy));
+    }
+}
+
+var stars = [];
+function init() {
+    for (let i = 0; i < n_stars; i++) {
+        stars.push(new Star());
+    }
+}
+init();
+
+document.addEventListener('click', (e) => {
+    let x = e.clientX;
+    let y = e.clientY;
+    let numBurstStars = 5;
+    for (let i = 0; i < numBurstStars; i++) {
+        MakeVelocityStar(x,y);
+    }
+});
+
+
+document.addEventListener('mousemove', (() => {
+    let mouseMoveCounter = 0;
+
+    return (e) => {
+        mouseMoveCounter++;
+        if (mouseMoveCounter >= 10) {
+            MakeVelocityStar(e.clientX,e.clientY);
+            mouseMoveCounter = 0; 
+        }
+    };
+})());
+
+function MakeVelocityStar(x, y)
+{
+    let starPosFromCords = 5;   
+    let angle = Math.random() * 2 * Math.PI; 
+    let randDistfromCord = Math.random() * starPosFromCords;
+    let dx = Math.cos(angle) * randDistfromCord; 
+    let dy = Math.sin(angle) * randDistfromCord; 
+
+        stars.push(new Star(x, y, Math.random() * 2 + 1, undefined, dx, dy));
+}
+
+
+function animate() {
+    requestAnimationFrame(animate);
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    c.fillStyle = bg;
+    c.fillRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(s => s.update(stars));
+}
+animate();
+
+
+    </script>
+
+</body>
+
+</html>
