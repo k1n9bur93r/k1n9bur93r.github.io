@@ -128,29 +128,11 @@
             <sub> Background Animation By 'Merve' <a href="https://codepen.io/mervedurdagi/pen/PWzmZR">Lifted From
                     CodePen </a>Modified by ChatGPT and I with Wuv</sub>
 
-
         </div>
 
-
-        <div class="glassBG">
-            <h4>Blog Spotlight</h4>
-            <h1> Apple's September 2024 iPhone Event</h1>
-            <div>
-                <div dyn="57" record="./blogs.txt" shape="ParseForBlogs">
-                    <sub>{{Date}}</sub>
-                    <h2>{{Header}}</h2>
-                    <p>{{Text}}</p>
-                </div>
-                <div dyn="56...52" record="./blogs.txt" shape="ParseForBlogs">
-                    <h3>{{Header}}</h3>
-                    <p>{{Text}}</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- <h1>Newest Blog</h1>
+        <h1>Newest Blog</h1>
         <hr>
-        <div dyn="n" record="./blogs.txt" shape="ParseForBlogs">
+        <div dyn="n" record="./blogs.txt as blogs" shape="ParseForBlogs">
             <div class="glassBG">
                 <div>
                     <h3>Latest Blog- </h3>
@@ -162,17 +144,54 @@
             </div>
         </div>
         <br>
-        <hr> -->
+        <hr>
+
+        <div class="glassBG">
+            <h4>Blog Spotlight</h4>
+            <h1> Apple's September 2024 iPhone Event</h1>
+            <div dyn record="blogs" shape="ParseForBlogs">
+                <div dyn="57">
+                    <sub>{{Date}}</sub>
+                    <h2>{{Header}}</h2>
+                    <p>{{Text}}</p>
+                </div>
+                <div dyn="56...52">
+                    <h3>{{Header}}</h3>
+                    <p>{{Text}}</p>
+                </div>
+            </div>
+        </div>
+
+
 
 
         <h2>Past Blogs</h2>
         <!-- <div dyn="n-1...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs"></div> -->
-        <div dyn="n-6...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs"></div>
+         <!-- <div dyn="n-1...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs" filter="FilterForVisionPro"></div> -->
+        
+        <div dyn="n-7...0" record="blogs" plate="./plates/BlogEntry.html" shape="ParseForBlogs" ></div>
     </div>
     </div>
 
     <script>
 
+        window.testObj = [
+            {
+            hello:"My Name is nack",
+            bye:{
+                open:'Yes',
+                closed:'No'
+            }},{
+            hello:"My Name is nook",
+            bye:{
+                open:'very',
+                closed:'not so much'
+            }}];
+
+        function FilterForVisionPro(records)
+        {
+            return records.filter(record => { return record.Text.includes("Vision") });
+        }
         function ParseForBlogs(data) {
             return data
                 .split('---')
@@ -225,7 +244,7 @@
         bg.addColorStop(1, "#000");
 
         class Star {
-            constructor(x, y, radius, color, dy = -Math.random() * .3, dx = 0) {
+            constructor(x, y, radius, color, dy = -Math.random() * .3, dx = 0,velocityStar = false) {
 
                 if (dx != 0) {
                     dx = dx - Math.random();
@@ -237,6 +256,8 @@
                 this.color = color || colors[randomInt(0, colors.length)];
                 this.dy = dy;
                 this.dx = dx
+                this.VelocityStar = velocityStar
+                this.opacity =.5;
             }
 
             draw() {
@@ -245,17 +266,32 @@
                 c.shadowBlur = randomInt(3, 15);
                 c.shadowColor = this.color;
                 c.strokeStyle = this.color;
-                c.fillStyle = 'rgba(255, 255, 255, .5)';
+                c.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
                 c.fill();
                 c.stroke();
                 c.closePath();
             }
 
             update(arrayStars = []) {
-                if (this.y - this.radius < 0) this.createNewStar(arrayStars);
+                if (this.y - this.radius < 0) { 
+                    this.createNewStar(arrayStars);
+                }
                 this.y += this.dy;
                 this.x += this.dx;
-                this.draw();
+                if(this.dy <= 0.01 || this.dx <= 0.01)
+                {
+                    this.opacity -= .01;
+                }
+                if((this.x > canvas.width || this.y > canvas.height || this.x < 0 || this.y < 0 || this.opacity <= 0) && this.VelocityStar){
+                    this.deleteStar(arrayStars);
+                } else {
+                    this.draw();
+                }
+            }
+
+            deleteStar(arrayStars = []) {
+                let i = arrayStars.indexOf(this);
+                arrayStars.splice(i, 1);
             }
 
             createNewStar(arrayStars = []) {
@@ -263,9 +299,11 @@
                 arrayStars.splice(i, 1);
                 arrayStars.push(new Star(false, canvasRect.height + 5, undefined, undefined, this.dy));
             }
+
         }
 
         var stars = [];
+        var velocityStars =[];
         function init() {
             for (let i = 0; i < n_stars; i++) {
                 stars.push(new Star());
@@ -302,7 +340,7 @@
             let dx = Math.cos(angle) * randDistfromCord;
             let dy = Math.sin(angle) * randDistfromCord;
 
-            stars.push(new Star(x, y, Math.random() * 2 + 1, undefined, dx, dy));
+            velocityStars.push(new Star(x, y, Math.random() * 4 + 1, undefined, dx, dy,true));
         }
 
 
@@ -312,6 +350,7 @@
             c.fillStyle = bg;
             c.fillRect(0, 0, canvasRect.width, canvasRect.height);
             stars.forEach(s => s.update(stars));
+            velocityStars.forEach(s => s.update(velocityStars));
         }
         animate();
 

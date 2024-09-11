@@ -49,7 +49,9 @@ class DynPlate {
   }
 
   BindRecordToProps(record, recordIndices) {
+    let boundProps = false;
     for (const propertyString in this.PlateObj.Props) {
+      boundProps = true;
       const properties = propertyString.split('.');
       let y = 0;
       let result = record;
@@ -71,13 +73,21 @@ class DynPlate {
         this.PlateObj.Props[propertyString].isArray = true;
       }
       this.PlateObj.Props[propertyString].value = result;
-    }
+      }
+      return boundProps;
   }
 
   async ParsePlate(htmlElement) {
-    if (htmlElement.hasAttribute('plate')) {
-      const externalPlate = await new DynStream(htmlElement.getAttribute('plate'), DynStreamTypes.PLATE).Get();
-      htmlElement.innerHTML = externalPlate;
+    let plateAttributeValue = htmlElement.hasAttribute('plate');
+    if (plateAttributeValue) {
+      plateAttributeValue = DynAlias.FetchOrSetAliasIfApplicable(htmlElement.getAttribute('plate'));
+      if (plateAttributeValue[0] === '#') {
+        document.querySelector(plateAttributeValue).style.display = 'none';
+        htmlElement.innerHTML = document.querySelector(plateAttributeValue).innerHTML;
+        
+      } else {
+        htmlElement.innerHTML = await new DynStream(htmlElement.getAttribute('plate'), DynStreamTypes.PLATE).Get();;
+      }
     }
     this.#PlateKey = this.GenerateGUID();
     await this.#ParsePlateForProps(htmlElement);
@@ -87,9 +97,14 @@ class DynPlate {
 
   async #ParsePlateForProps(parentElement) {
     let hasDyn = false;
+    if (typeof parentElement === 'string') {
+      const container = document.createElement('div');
+      container.innerHTML = parentElement;
+      parentElement = container;
+    }
+
     for (let i = 0; i < parentElement.childNodes.length; i++) {
       const childHtmlNode = parentElement.childNodes[i];
-
       if (childHtmlNode.nodeType === 1) {
         if (childHtmlNode.hasAttribute('dyn')) {
           hasDyn = true;
@@ -138,7 +153,6 @@ class DynPair {
     const indexToLoopOn = htmlElement.hasAttribute('recordIndex') ? htmlElement.getAttribute('recordIndex').split(',') : [];
     const recordLevel = this.#Record.GetRecordLoopingLength(this.#Plate.PlateObj.RecordDepth, indexToLoopOn);
     const indexs = getIndex(htmlElement.getAttribute('dyn'), recordLevel);
-
     for (let i = 0; i < indexs.length; i++) {
       const recordIndices = htmlElement.hasAttribute('recordIndex') ? htmlElement.getAttribute('recordIndex').split(',') : [];
       recordIndices.push(indexs[i]);
@@ -147,13 +161,12 @@ class DynPair {
       this.#Plate.BindRecordToProps(this.#Record.Record, recordIndices);
       this.#Plate.RenderPlate(indexs[i]);
       plateCopy.innerHTML = this.#Plate.PlateObj.Render;
-
       plateCopy.querySelectorAll('[recordIndex]').forEach((dyn) => {
-        dyn.getAttribute('key') == this.#Plate.PlateKey ? dyn.setAttribute('recordIndex', dyn.getAttribute('recordIndex').concat(recordIndices)) : null;
+      dyn.getAttribute('key') == this.#Plate.PlateKey ? dyn.setAttribute('recordIndex', dyn.getAttribute('recordIndex').concat(recordIndices)) : null;
       });
       htmlElement.appendChild(plateCopy);
+      
     }
-
     for (let index = 0; index < this.#Plate.PlateSubDyn.length; index++) {
       htmlElement.querySelectorAll(`[plateindex="${index}"]`).forEach((dyn) => {
         dyn.innerHTML = this.#Plate.PlateSubDyn[index].innerHTML;
@@ -179,18 +192,29 @@ class DynRecord {
       }
       return parsedRecord;
     };
+
+    let postAtnFilter = (record) => record;
+    let preFilteredRecord;
     if (this.#Rules.CheckFuncExists(htmlElement, 'shape')) {
       postLoadAtn = window[htmlElement.getAttribute('shape')];
     }
-    if (this.#Rules.CheckServerPath(htmlElement.getAttribute('record'))) {
-      this.Record = await new DynStream(htmlElement.getAttribute('record'), DynStreamTypes.RECORD).Get(postLoadAtn);
-    } else if (window[htmlElement.getAttribute('record')]) {
-      this.Record = postLoadAtn(window[htmlElement.getAttribute('record')]);
+    if (this.#Rules.CheckFuncExists(htmlElement, 'filter')) {
+      postAtnFilter = window[htmlElement.getAttribute('filter')];
     }
+    let recordAttributeValue = DynAlias.FetchOrSetAliasIfApplicable(htmlElement.getAttribute('record'));
+    if (this.#Rules.CheckServerPath(recordAttributeValue)) {
+      preFilteredRecord = await new DynStream(recordAttributeValue, DynStreamTypes.RECORD).Get(postLoadAtn);
+    } else {
+      preFilteredRecord = window[`${recordAttributeValue}`];
+      if (!preFilteredRecord) {
+        throw new Error('A valid server location or window bound JS object was not set for the Plate');
+      }
+    }
+    this.Record = postAtnFilter(preFilteredRecord);
   }
 
   GetRecordLoopingLength(recordPath, recordIndices) {
-    if (recordIndices.length == 0) {
+    if (recordIndices.length === 0) {
       return this.Record;
     }
 
@@ -226,17 +250,26 @@ class DynNode {
 
   constructor(htmlNode, parentNode = undefined) {
     if (parentNode) {
-      if (!htmlNode.hasAttribute('record')) {
-        htmlNode.setAttribute('record', parentNode.GetHook().getAttribute('record'));
-      }
       parentNode.AddChild(this);
       this.AddParent(parentNode);
     }
     this.#HtmlNode = htmlNode;
+    if (!this.#HtmlNode.getAttribute('record')) {
+      const parentScopedRecord = this.SearchUpForNearestRecord();
+      this.#HtmlNode.setAttribute('record', parentScopedRecord[0]);
+      if (parentScopedRecord[1]) {
+        this.#HtmlNode.setAttribute('shape', parentScopedRecord[1]);
+      }
+      if (parentScopedRecord[2]) {
+        this.#HtmlNode.setAttribute('filter', parentScopedRecord[2]);
+      }
+    }
   }
 
   LoadNoad() {
-    this.#Pair.CreatePair(this.#HtmlNode);
+    if (this.#HtmlNode.getAttribute('dyn') !== '') {
+      this.#Pair.CreatePair(this.#HtmlNode);
+    }
   }
 
   AddParent(parentDyn) {
@@ -246,6 +279,23 @@ class DynNode {
   AddChild(dynNodeChild) {
     dynNodeChild.AddParent(this);
     this.#ChildNodes.push(dynNodeChild);
+  }
+
+  SearchUpForNearestRecord() {
+    const isRecordEmptyOrSpaces = (attributeValue) => attributeValue === null || attributeValue.match(/^ *$/) !== null;
+    let parentNodeToSearch = this.#ParentNodes;
+    do {
+      if (!parentNodeToSearch) {
+        throw new Error('Dyn was not supplied a Record and no other Records were found higher up the dyn tree scope.');
+      }
+      const possibleNodeRecord = this.#ParentNodes.#HtmlNode.getAttribute('record');
+      const possibleNodeShape = this.#ParentNodes.#HtmlNode.getAttribute('shape');
+      const possibleNodeFilter = this.#ParentNodes.#HtmlNode.getAttribute('filter');
+      if (!isRecordEmptyOrSpaces(possibleNodeRecord)) {
+        return [possibleNodeRecord, possibleNodeShape, possibleNodeFilter];
+      }
+      parentNodeToSearch = parentNodeToSearch.#ParentNodes;
+    } while (true);
   }
 }
 
@@ -266,7 +316,7 @@ class DynStream {
   #Type = (Name, Id) => ({ Name, Id });
 
   #GetType(typeId) {
-    const foundType = this.#StreamType.find((type) => type.Id == typeId);
+    const foundType = this.#StreamType.find((type) => type.Id === typeId);
 
     if (!foundType) {
       throw new Error('Invalid Dyn Stream. Unkown Type Id was supplied to Dyn stream.');
@@ -310,6 +360,48 @@ class DynStream {
   }
 }
 
+class DynAlias {
+  static StreamAliases = new Map();
+
+  static FetchOrSetAliasIfApplicable(streamPath) {
+    if (DynAlias.HasAliasInPath(streamPath)) {
+      let alias = '';
+      [streamPath, alias] = DynAlias.ExtractStreamAlias(streamPath);
+      DynAlias.SetStreamAlias(streamPath, alias);
+    }
+    if (DynAlias.HasAlias(streamPath)) {
+      streamPath = DynAlias.GetStreamFromAlias(streamPath);
+    }
+    return streamPath;
+  }
+
+  static HasAliasInPath(streamPath) {
+    if (streamPath.includes(' as ')) {
+      return true;
+    }
+    return false;
+  }
+
+  static HasAlias(alias) {
+    if (this.StreamAliases.has(alias)) {
+      return true;
+    }
+    return false;
+  }
+
+  static ExtractStreamAlias(streamPath) {
+    return streamPath.split(' as ');
+  }
+
+  static SetStreamAlias(streamPath, userAlias) {
+    this.StreamAliases.set(userAlias, streamPath);
+  }
+
+  static GetStreamFromAlias(userAlias) {
+    return this.StreamAliases.get(userAlias);
+  }
+}
+
 class DynRules {
   #Bind = new DynBind();
 
@@ -329,23 +421,19 @@ class DynRules {
     switch (true) {
       case dynAttributeValue === '':
       {
-        return (value, record) => [0];
-        // break;
+        return (value, record) => [0]; //this will never be hit as an empty dyn attribute now defines an element scope 
       }
       case this.#ServerPath.test(dynAttributeValue):
       {
         return undefined;
-        // break;
       }
       case this.#Loop.test(dynAttributeValue):
       {
         return this.#Bind.BindLoop.bind(this.#Bind);
-        // break;
       }
       case this.#Index.test(dynAttributeValue):
       {
         return this.#Bind.BindIndex.bind(this.#Bind);
-        // break;
       }
       default:
       {

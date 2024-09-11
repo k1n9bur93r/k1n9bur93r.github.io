@@ -274,3 +274,7 @@ It’s a big year for Airpods, Three (four?) announcements and two of those were
 iPhone Szn
 11 Months of Rumors Come to Fruition
 Alrighty! It's been a fun day today, Apple did their thing and showed off the new cash cows. I have some thoughts! Let's get into them!
+---9/11/14
+DynPages 2.5
+Quick Work!
+Back at it again, at being inspired. Some little quality of life updates for the rendering code. You can now define an 'element' scope with a dyn attribute with no value. This allows you to then reference specific elements in the Record array within that scope, rather than needing to reference the Record again. Also Record and Plate alises are now included. An 'as' keyword lets you provide an alias to a resource you may want to reference more than once. ie "record = './Blogs.txt as blogs'" next time you can just enter 'blogs'! Both good changes to save some key strokes. Also a record can now be filtered with a supplied function. Things can't rerender so it's a static filter, but that gives some flexability. Also might be a good jumping off point to allow for rerendering 👀  
