@@ -196,22 +196,29 @@
         }
 
         var canvas = document.querySelector('canvas');
-        canvas.width = innerWidth;
-        canvas.height = innerHeight;
+        var c = canvas.getContext('2d');
+        let canvasRect = canvas.getBoundingClientRect();
+        function resizeCanvas() {
+            const dpi = window.devicePixelRatio;
+            canvas.width = innerWidth * dpi;
+            canvas.height = innerHeight * dpi;
+            canvasRect = canvas.getBoundingClientRect();
+            c.restore()
+            c.scale(dpi, dpi);
+        }
+        resizeCanvas()
 
         addEventListener('resize', () => {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
+            resizeCanvas()
             stars = [];
             init();
         });
 
         canvas.style.background = '#000';
-        var c = canvas.getContext('2d');
 
         const randomInt = (max, min) => Math.floor(Math.random() * (max - min) + min);
 
-        var bg = c.createRadialGradient(canvas.width / 2, canvas.height * 2, canvas.height, canvas.width / 2, canvas.height, canvas.height * 4);
+        var bg = c.createRadialGradient(canvasRect.width / 2, canvasRect.height * 2, canvasRect.height, canvasRect.width / 2, canvasRect.height, canvasRect.height * 4);
         bg.addColorStop(0, "#300d82");
         bg.addColorStop(.4, "#000814");
         bg.addColorStop(.8, "#000814");
@@ -224,8 +231,8 @@
                     dx = dx - Math.random();
                 }
 
-                this.x = x || randomInt(0, canvas.width);
-                this.y = y || randomInt(0, canvas.height);
+                this.x = x || randomInt(0, canvasRect.width);
+                this.y = y || randomInt(0, canvasRect.height);
                 this.radius = radius || Math.random() * 1.1;
                 this.color = color || colors[randomInt(0, colors.length)];
                 this.dy = dy;
@@ -254,7 +261,7 @@
             createNewStar(arrayStars = []) {
                 let i = arrayStars.indexOf(this);
                 arrayStars.splice(i, 1);
-                arrayStars.push(new Star(false, canvas.height + 5, undefined, undefined, this.dy));
+                arrayStars.push(new Star(false, canvasRect.height + 5, undefined, undefined, this.dy));
             }
         }
 
@@ -301,9 +308,9 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            c.clearRect(0, 0, canvas.width, canvas.height);
+            c.clearRect(0, 0, canvasRect.width, canvasRect.height);
             c.fillStyle = bg;
-            c.fillRect(0, 0, canvas.width, canvas.height);
+            c.fillRect(0, 0, canvasRect.width, canvasRect.height);
             stars.forEach(s => s.update(stars));
         }
         animate();
