@@ -6,27 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K1n9's blog space</title>
     <script type="module" src="js/dyn.js"></script>
+    <script type="module" src="js/canvasBg.js"></script>
+    <script type="module" src="js/glassStack.js"></script>
     <style>
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        a,
-        p,
-        li,
-        sub {
-            color: white
+        @font-face {
+            font-family: 'HeaderFont';
+            src: url('./css/fonts/BebasNeue-Regular.woff2') format('woff2');
         }
-
-
 
         body,
         html {
-            height: 100%;
-            overflow-x: hidden;
             font-family: Arial, sans-serif;
+           
         }
 
 
@@ -37,7 +28,6 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-
         }
 
 
@@ -45,15 +35,10 @@
             scroll-behavior: smooth;
         }
 
-
-
         .content {
             margin-left: 15%;
             margin-right: 15%;
-            margin-top: 5%;
-            margin-bottom: 5%;
         }
-
 
         @media screen and (max-width: 768px) {
             .content {
@@ -70,8 +55,22 @@
             }
         }
 
+        .Collapseable {
+            height: auto;
+           
+        }
+
+        .Collapseable.Collapsed {
+            margin: 0px;
+            padding: 0px;
+            height: 0px !important;
+            opacity: 0.0;
+            display: absolute;
+            z-index: -1;
+        }
+
         .glassBG {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.6);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             backdrop-filter: blur(4.5px);
             -webkit-backdrop-filter: blur(4.5px);
@@ -82,7 +81,7 @@
         }
 
         .HeaderGlass {
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.60);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
             backdrop-filter: blur(4.5px);
             -webkit-backdrop-filter: blur(4.5px);
@@ -96,8 +95,162 @@
             line-height: 1.6;
             margin-bottom: 1.2em;
             font-size: 0.95em;
-            color: white;
             text-indent: 1em;
+        }
+
+        .FeaturedBlog {
+            height: 400px;
+            overflow: hidden;
+        }
+
+        .FeaturedBlog.expanded {
+            height: 100%;
+            overflow: visible;
+        }
+
+        .shadow-container {
+            position: relative;
+        }
+
+        .shadow-container::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shadow-container.expanded::after {
+            height: 0px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+
+
+        .glassStack {
+            height: 200px;
+            transition: opacity 0.25s ease;
+            overflow: scroll;
+            position: relative;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glassStack::-webkit-scrollbar {
+            display: none;
+        }
+
+        .glassStack.hovered {
+            height: 1000px;
+
+        }
+
+        .glassStackItem {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4.5px);
+            border-radius: 10px;
+            position: absolute;
+            transition: opacity 0.25s ease;
+            transition: margin-top 0.25s ease-in-out;
+            overflow: hidden;
+            width: 100%;
+            display: none;
+        }
+
+        .glassStackItemDisplay {
+            display: block !important;
+        }
+
+        .glassStackItemContent {
+            max-height: 50px;
+            height: 50px;
+            min-height: 50px;
+            padding: 15px;
+
+        }
+
+        .glassStackItemContent p {
+            line-height: 1.6;
+            margin-bottom: 1.2em;
+            font-size: 0.95em;
+            padding-right: 20px;
+            text-indent: 1em;
+        }
+
+        .glassStackItemContent.hovered {
+            max-height: 1000px !important;
+            height: auto !important;
+            width: 100%;
+        }
+
+        .grow {
+            background-color: rgba(255, 255, 255, 0.6);
+            z-index: 99;
+        }
+
+        .visible-1 {
+            opacity: 0.75 !important;
+        }
+
+        .visible-2 {
+            opacity: 0.5 !important;
+        }
+
+        .visible-3 {
+            opacity: 0.25 !important;
+        }
+
+        .visible-4 {
+            opacity: 0.0 !important;
+        }
+
+
+        .header-glow {
+            font-family: 'HeaderFont', sans-serif;
+            color: white;
+            text-align: left;
+            text-transform: uppercase;
+            letter-spacing: 15px;
+            position: relative;
+            animation: flicker 1.5s infinite alternate;
+            text-shadow:
+                0 0 3px #fff,
+                0 0 6px #fff,
+                0 0 9px #fff,
+                0 0 12px #e0e0ff,
+                0 0 18px #c0c0ff,
+                0 0 24px #a0a0ff,
+                0 0 30px #8080ff;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                text-shadow:
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 15px #fff,
+                    0 0 20px #f0f,
+                    0 0 30px #f0f,
+                    0 0 40px #0ff,
+                    0 0 50px #0ff;
+            }
+
+            50% {
+                text-shadow:
+                    0 0 3px #fff,
+                    0 0 8px #fff,
+                    0 0 12px #fff,
+                    0 0 18px #f0f,
+                    0 0 25px #f0f,
+                    0 0 35px #0ff,
+                    0 0 45px #0ff;
+            }
         }
     </style>
 </head>
@@ -109,254 +262,108 @@
 
 
     <div class="content">
-        <div class="HeaderGlass">
-            <h1>K1n9Bur93r</h1>
-            <p> Little projects and ideas in the hope of creating a good site. <a
-                    href="https://github.com/k1n9bur93r/k1n9bur93r.github.io/tree/main">Github</a></p>
-            <p> Current project: <strong>Proper website with actual inspired design</strong></p>
-            <h3>Cool note about this site, it is built with a custom templating system I call 'DynPages'</h3>
-            <p> It features the following!</p>
-            <ul>
-                <li> HTML Zen ☯️ ✅</li>
-                <li> No user facing JS ✅</li>
-                <li> Fetch local or external text/json data ✅</li>
-                <li> Locally created or fetched HTML templates ✅</li>
-                <li> Fetched Resource sharing between Dyns ✅</li>
-            </ul>
-            <p> Basically Mustache.Js though without ever having seen how that was built...so it's probably worse, but
-                also unique! </p>
-            <sub> Background Animation By 'Merve' <a href="https://codepen.io/mervedurdagi/pen/PWzmZR">Lifted From
-                    CodePen </a>Modified by ChatGPT and I with Wuv</sub>
+        <div class="Collapseable">
+            <h1 class="header-glow " style=" margin-top:5%;">K1n9Bur93r</h1>
+            <div class="HeaderGlass">
+                <p> Little projects and ideas in the hope of creating a good site. <a
+                        href="https://github.com/k1n9bur93r/k1n9bur93r.github.io/tree/main">Github</a></p>
+                <p> Current project: <strong>Proper website with actual inspired design</strong></p>
+                <h3>Cool note about this site, it is built with a custom templating system I call 'DynPages'</h3>
+                <p> It features the following!</p>
+                <ul>
+                    <li> HTML Zen ☯️ ✅</li>
+                    <li> No user facing JS ✅</li>
+                    <li> Fetch local or external text/json data ✅</li>
+                    <li> Locally created or fetched HTML templates ✅</li>
+                    <li> Fetched Resource sharing between Dyns ✅</li>
+                </ul>
+                <p> Basically Mustache.Js though without ever having seen how that was built...so it's probably worse,
+                    but
+                    also unique! </p>
+                <sub> Background Animation By 'Merve' <a href="https://codepen.io/mervedurdagi/pen/PWzmZR">Lifted From
+                        CodePen </a>Modified by ChatGPT and I with Wuv</sub>
 
-        </div>
-
-        <h1>Newest Blog</h1>
-        <hr>
-        <div dyn="n" record="./blogs.txt as blogs" shape="ParseForBlogs">
-            <div class="glassBG">
-                <div>
-                    <h3>Latest Blog- </h3>
-                    <h2>{{Title}}</h2>
-                </div>
-                <h3 syle="padding-top:0px;">{{Header}}</h3>
-                <p>{{Text}}</p>
-                <sub><em></em>{{Date}}</sub>
             </div>
-        </div>
-        <br>
-        <hr>
 
-        <div class="glassBG">
-            <h4>Blog Spotlight</h4>
-            <h1> Apple's September 2024 iPhone Event</h1>
-            <div dyn record="blogs" shape="ParseForBlogs">
-                <div dyn="57">
-                    <sub>{{Date}}</sub>
-                    <h2>{{Header}}</h2>
-                    <p>{{Text}}</p>
+            <h2 class="header-glow "> Newest Blog</h2>
+                <div dyn="n" record="./blogs.txt as blogs" shape="ParseForBlogs">
+                    <div class="glassBG">
+                        <div>
+                            <h3>Latest Blog- </h3>
+                            <h2>{{Title}}</h2>
+                        </div>
+                        <h3 syle="padding-top:0px;">{{Header}}</h3>
+                        <p>{{Text}}</p>
+                        <sub><em></em>{{Date}}</sub>
+                    </div>
                 </div>
-                <div dyn="56...52">
-                    <h3>{{Header}}</h3>
-                    <p>{{Text}}</p>
-                </div>
-            </div>
         </div>
+            <h2 class="header-glow spotLightHeader Collapseable ">Blog Spotlight</h2>
+            <div class="glassBG FeaturedBlog shadow-container Collapseable">
 
-
-
-
-        <h2>Past Blogs</h2>
-        <!-- <div dyn="n-1...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs"></div> -->
-         <!-- <div dyn="n-1...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs" filter="FilterForVisionPro"></div> -->
-        
-        <div dyn="n-7...0" record="blogs" plate="./plates/BlogEntry.html" shape="ParseForBlogs" ></div>
+                <h1> Apple's September 2024 iPhone Event</h1>
+                <div dyn record="blogs" shape="ParseForBlogs">
+                    <div dyn="57">
+                        <sub>{{Date}}</sub>
+                        <h2>{{Header}}</h2>
+                        <p>{{Text}}</p>
+                    </div>
+                    <div dyn="56...52">
+                        <h3>{{Header}}</h3>
+                        <p>{{Text}}</p>
+                    </div>
+                </div>
+        </div>
+        <h2 class="header-glow Collapseable pastBlogsHeader ">Past Blogs
+        </h2>
+        <div class="glassStack Collapseable" dyn="n-8...0" record="./blogs.txt" plate="./plates/BlogEntry.html" shape="ParseForBlogs"></div>
     </div>
-    </div>
-
-    <script>
-
-        window.testObj = [
-            {
-            hello:"My Name is nack",
-            bye:{
-                open:'Yes',
-                closed:'No'
-            }},{
-            hello:"My Name is nook",
-            bye:{
-                open:'very',
-                closed:'not so much'
-            }}];
-
-        function FilterForVisionPro(records)
-        {
-            return records.filter(record => { return record.Text.includes("Vision") });
-        }
-        function ParseForBlogs(data) {
-            return data
-                .split('---')
-                .map(section => section.split("\n"))
-                .map(lines => ({
-                    Date: lines[0],
-                    Title: lines[1],
-                    Header: lines[2],
-                    Text: lines[3]
-                }))
-        }
-
-        // Starry Background Animation Code
-        // Created By 'Merve'
-        //Lifted From https://codepen.io/mervedurdagi/pen/PWzmZR
-        var n_stars = 150;
-        var n_stars = 150;
-        var colors = ['#ba2356', '#fb9b39'];
-        for (let i = 0; i < 3; i++) {
-            colors.push('#fff');
-        }
-
-        var canvas = document.querySelector('canvas');
-        var c = canvas.getContext('2d');
-        let canvasRect = canvas.getBoundingClientRect();
-        function resizeCanvas() {
-            const dpi = window.devicePixelRatio;
-            canvas.width = innerWidth * dpi;
-            canvas.height = innerHeight * dpi;
-            canvasRect = canvas.getBoundingClientRect();
-            c.restore()
-            c.scale(dpi, dpi);
-        }
-        resizeCanvas()
-
-        addEventListener('resize', () => {
-            resizeCanvas()
-            stars = [];
-            init();
-        });
-
-        canvas.style.background = '#000';
-
-        const randomInt = (max, min) => Math.floor(Math.random() * (max - min) + min);
-
-        var bg = c.createRadialGradient(canvasRect.width / 2, canvasRect.height * 2, canvasRect.height, canvasRect.width / 2, canvasRect.height, canvasRect.height * 4);
-        bg.addColorStop(0, "#300d82");
-        bg.addColorStop(.4, "#000814");
-        bg.addColorStop(.8, "#000814");
-        bg.addColorStop(1, "#000");
-
-        class Star {
-            constructor(x, y, radius, color, dy = -Math.random() * .3, dx = 0,velocityStar = false) {
-
-                if (dx != 0) {
-                    dx = dx - Math.random();
-                }
-
-                this.x = x || randomInt(0, canvasRect.width);
-                this.y = y || randomInt(0, canvasRect.height);
-                this.radius = radius || Math.random() * 1.1;
-                this.color = color || colors[randomInt(0, colors.length)];
-                this.dy = dy;
-                this.dx = dx
-                this.VelocityStar = velocityStar
-                this.opacity =.5;
-            }
-
-            draw() {
-                c.beginPath();
-                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                c.shadowBlur = randomInt(3, 15);
-                c.shadowColor = this.color;
-                c.strokeStyle = this.color;
-                c.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                c.fill();
-                c.stroke();
-                c.closePath();
-            }
-
-            update(arrayStars = []) {
-                if (this.y - this.radius < 0) { 
-                    this.createNewStar(arrayStars);
-                }
-                this.y += this.dy;
-                this.x += this.dx;
-                if(this.dy <= 0.01 || this.dx <= 0.01)
-                {
-                    this.opacity -= .01;
-                }
-                if((this.x > canvas.width || this.y > canvas.height || this.x < 0 || this.y < 0 || this.opacity <= 0) && this.VelocityStar){
-                    this.deleteStar(arrayStars);
-                } else {
-                    this.draw();
-                }
-            }
-
-            deleteStar(arrayStars = []) {
-                let i = arrayStars.indexOf(this);
-                arrayStars.splice(i, 1);
-            }
-
-            createNewStar(arrayStars = []) {
-                let i = arrayStars.indexOf(this);
-                arrayStars.splice(i, 1);
-                arrayStars.push(new Star(false, canvasRect.height + 5, undefined, undefined, this.dy));
-            }
-
-        }
-
-        var stars = [];
-        var velocityStars =[];
-        function init() {
-            for (let i = 0; i < n_stars; i++) {
-                stars.push(new Star());
-            }
-        }
-        init();
-
-        document.addEventListener('click', (e) => {
-            let x = e.clientX;
-            let y = e.clientY;
-            let numBurstStars = 5;
-            for (let i = 0; i < numBurstStars; i++) {
-                MakeVelocityStar(x, y);
-            }
-        });
-
-
-        document.addEventListener('mousemove', (() => {
-            let mouseMoveCounter = 0;
-
-            return (e) => {
-                mouseMoveCounter++;
-                if (mouseMoveCounter >= 10) {
-                    MakeVelocityStar(e.clientX, e.clientY);
-                    mouseMoveCounter = 0;
-                }
-            };
-        })());
-
-        function MakeVelocityStar(x, y) {
-            let starPosFromCords = 5;
-            let angle = Math.random() * 2 * Math.PI;
-            let randDistfromCord = Math.random() * starPosFromCords;
-            let dx = Math.cos(angle) * randDistfromCord;
-            let dy = Math.sin(angle) * randDistfromCord;
-
-            velocityStars.push(new Star(x, y, Math.random() * 4 + 1, undefined, dx, dy,true));
-        }
-
-
-        function animate() {
-            requestAnimationFrame(animate);
-            c.clearRect(0, 0, canvasRect.width, canvasRect.height);
-            c.fillStyle = bg;
-            c.fillRect(0, 0, canvasRect.width, canvasRect.height);
-            stars.forEach(s => s.update(stars));
-            velocityStars.forEach(s => s.update(velocityStars));
-        }
-        animate();
-
-
-    </script>
-
 </body>
+<script>
+    function FilterForVisionPro(records) {
+        return records.filter(record => { return record.Text.includes("Vision") });
+    }
+    function ParseForBlogs(data) {
+        return data
+            .split('---')
+            .map(section => section.split("\n"))
+            .map(lines => ({
+                Date: lines[0],
+                Title: lines[1],
+                Header: lines[2],
+                Text: lines[3]
+            }))
+    }
+
+    document.querySelector('.FeaturedBlog').addEventListener('click', (function () {
+    let isExpanded = false;
+    let savedScrollPosFeatured = 0;
+    return function (e) {
+        let toBeCollapsed = document.querySelectorAll('.Collapseable:not(.FeaturedBlog, .spotLightHeader)');
+        if (isExpanded) {
+            document.querySelector('.FeaturedBlog').classList.remove('expanded');
+            for (let i = 0; i < toBeCollapsed.length; i++) {
+            toBeCollapsed[i].classList.remove('Collapsed');
+            
+            console.log(savedScrollPos);
+            window.scrollTo({ top: savedScrollPos, left: 0,behavior:'instant' }); 
+            
+        }
+        } else {
+            document.querySelector('.FeaturedBlog').classList.add('expanded');
+            savedScrollPos = window.scrollY;
+            for (let i = 0; i < toBeCollapsed.length; i++) {
+            toBeCollapsed[i].classList.add('Collapsed');
+
+            window.scrollTo({ top: -10, left: 0,behavior:'instant' }); 
+            console.log(savedScrollPos)
+        }
+        }
+
+        isExpanded = !isExpanded;
+    };
+})());
+
+</script>
 
 </html>

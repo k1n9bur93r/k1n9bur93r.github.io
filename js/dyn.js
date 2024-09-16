@@ -153,14 +153,16 @@ class DynPair {
     const indexToLoopOn = htmlElement.hasAttribute('recordIndex') ? htmlElement.getAttribute('recordIndex').split(',') : [];
     const recordLevel = this.#Record.GetRecordLoopingLength(this.#Plate.PlateObj.RecordDepth, indexToLoopOn);
     const indexs = getIndex(htmlElement.getAttribute('dyn'), recordLevel);
+    const parser = new DOMParser();
     for (let i = 0; i < indexs.length; i++) {
       const recordIndices = htmlElement.hasAttribute('recordIndex') ? htmlElement.getAttribute('recordIndex').split(',') : [];
       recordIndices.push(indexs[i]);
-      const plateCopy = document.createElement('div');
-      plateCopy.id = `${this.#Plate.GenerateGUID()}#${indexs[i]}`;
+
       this.#Plate.BindRecordToProps(this.#Record.Record, recordIndices);
       this.#Plate.RenderPlate(indexs[i]);
-      plateCopy.innerHTML = this.#Plate.PlateObj.Render;
+      let plateCopy = parser.parseFromString(this.#Plate.PlateObj.Render, 'text/html');
+      plateCopy = plateCopy.childNodes[0].childNodes[1].childNodes.length === 1 ? plateCopy.childNodes[0].childNodes[1].firstChild : plateCopy.childNodes[0].childNodes[1];
+      plateCopy.id = `${this.#Plate.GenerateGUID()}#${indexs[i]}`;
       plateCopy.querySelectorAll('[recordIndex]').forEach((dyn) => {
       dyn.getAttribute('key') == this.#Plate.PlateKey ? dyn.setAttribute('recordIndex', dyn.getAttribute('recordIndex').concat(recordIndices)) : null;
       });
