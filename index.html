@@ -372,7 +372,7 @@
         return records.filter(record => { return record.Text.length<=150 || (record.Title === 'Micro' && record.Header === 'Micro')});
     }
     function FilterOutMicroAndFeature(records) {
-        return records.filter(record => { return (record.Title !== 'Micro' && record.Header !== 'Micro') && record.Title !== 'iPhone Szn'});
+        return records.filter(record => { return (record.Title !== 'Micro' && record.Header !== 'Micro') && record.Text.length > 150  && record.Title !== 'iPhone Szn'});
     }
     function ParseForBlogs(data) {
         return data
