@@ -9,302 +9,11 @@
     <script type="module" src="js/canvasBg.js"></script>
     <script type="module" src="js/glassStack.js"></script>
     <script type="module" src="js/microCarousel.js"></script>
-    <style>
-        @font-face {
-            font-family: 'HeaderFont';
-            src: url('./css/fonts/BebasNeue-Regular.woff2') format('woff2');
-        }
-
-        body,
-        html {
-            font-family: Arial, sans-serif;
-           
-        }
-
-
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .content {
-            margin-left: 15%;
-            margin-right: 15%;
-        }
-
-        @media screen and (max-width: 768px) {
-            .content {
-                margin-left: 5%;
-                margin-right: 5%;
-            }
-        }
-
-
-        @media screen and (max-width: 480px) {
-            .content {
-                margin-left: 3%;
-                margin-right: 3%;
-            }
-        }
-
-        .Collapseable {
-            height: auto;
-           
-        }
-
-        .Collapseable.Collapsed {
-            margin: 0px;
-            padding: 0px;
-            height: 0px !important;
-            opacity: 0.0;
-            display: absolute;
-            z-index: -1;
-        }
-
-        .glassBG {
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-
-        }
-
-        .HeaderGlass {
-            background: rgba(255, 255, 255, 0.60);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-
-        }
-
-        .glassBG p {
-            line-height: 1.6;
-            margin-bottom: 1.2em;
-            font-size: 0.95em;
-            text-indent: 1em;
-        }
-
-        .FeaturedBlog {
-            height: 400px;
-            overflow: hidden;
-        }
-
-        .FeaturedBlog.expanded {
-            height: 100%;
-            overflow: visible;
-        }
-
-        .shadow-container {
-            position: relative;
-        }
-
-        .shadow-container::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 40px;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.3) 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .shadow-container.expanded::after {
-            height: 0px;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
-        }
-
-
-        .glassStack {
-            height: 200px;
-            transition: opacity 0.25s ease;
-            overflow: scroll;
-            position: relative;
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        .glassStack::-webkit-scrollbar {
-            display: none;
-        }
-
-        .glassStack.hovered {
-            height: 1000px;
-
-        }
-  
-        .glassStackItem {
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            backdrop-filter: blur(4.5px);
-            -webkit-backdrop-filter: blur(4.5px);
-            border-radius: 10px;
-            width: 100%;
-            position: absolute;
-            transition: opacity 0.25s ease;
-            transition: margin-top 0.25s ease-in-out;
-            overflow: hidden;
-            display: none;
-        }
-
-        .glassStackItemDisplay {
-            display: block !important;
-        }
-
-        .glassStackItemContent {
-            max-height: 50px;
-            height: 50px;
-            min-height: 50px;
-            padding: 15px;
-
-        }
-
-        .glassStackItemContent p {
-            line-height: 1.6;
-            margin-bottom: 1.2em;
-            font-size: 0.95em;
-            padding-right: 20px;
-            text-indent: 1em;
-        }
-
-        .glassStackItemContent.hovered {
-            max-height: 1000px !important;
-            height: auto !important;
-            width: 100%;
-        }
-        .grow {
-            background-color: rgba(255, 255, 255, 0.6);
-            z-index: 99;
-        }
-
-        .visible-1 {
-            opacity: 0.75 !important;
-        }
-
-        .visible-2 {
-            opacity: 0.5 !important;
-        }
-
-        .visible-3 {
-            opacity: 0.25 !important;
-        }
-
-        .visible-4 {
-            opacity: 0.0 !important;
-        }
-
-        .card.visible-1 {
-            opacity: 0.5 !important;
-        }
-
-        .card.visible-2 {
-            opacity: 0.25 !important;
-        }
-
-        .card.visible-3 {
-            opacity: 0.15 !important;
-        }
-
-        .visible-4 {
-            opacity: 0.0 !important;
-        }
-
-
-        .header-glow {
-            font-family: 'HeaderFont';
-            color: #fff;
-            background: radial-gradient(circle, rgba(131,58,180,1) 0%, rgba(250,219,219,1) 34%, rgba(241,157,29,1) 70%, rgba(131,58,180,1) 100%);
-            background-size: 300% 300%;
-            letter-spacing: .4rem;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 5s infinite ease-in-out;
-        }
-
-        @keyframes shimmer {
-            0% {
-                background-position: 0% 0%;
-            }
-            100% {
-                background-position: 100% 100%;
-            }
-        }
-
-
-.carousel{
-  position: relative;
-  margin: 0 auto;
-  height: 260px;
-  padding-top: 25px;
-  padding-left: 25vw;
-  padding-right: 25vw;
-  overflow-x: scroll;
-  scroll-behavior: auto;
-  white-space: nowrap;
-  scrollbar-width: none; /* Hide scrollbar in Firefox */
-  scroll-snap-type: x mandatory; 
-  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
-            mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 20%, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
-}
-.carousel::-webkit-scrollbar {
-            display: none;
-        }
-
-.slideshow-container::-webkit-scrollbar {
-  display: none; /* Hide scrollbar in Webkit */
-}
-
-.slideshow {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-
-.card {
-  flex: 0 0 20%;
-  margin: 0 10px;
-  height: 200px;
-  width: 150px;
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
-  transition: transform 0.5s ease;
-  opacity: .5;
-  white-space: normal;
-  background: rgba(255, 255, 255, 0.60);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border-radius: 10px;
-            padding: 15px;
-}
-
-.card.active {
-  transform: scale(1.2);
-  opacity: 1;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-
-}
-
-
-
-    </style>
+    <link rel="stylesheet" href="/css/nasty.css">
 </head>
 
 <body>
-
-
     <canvas></canvas>
-
-
     <div class="content">
         <div class="Collapseable">
             <h1 class="header-glow " style=" margin-top:5%;">K1n9Bur93r</h1>
@@ -330,49 +39,51 @@
             </div>
 
             <h2 class="header-glow "> Newest Blog</h2>
-                <div dyn="n" record="./blogs.txt as blogs" shape="ParseForBlogs" filter ="FilterOutMicroAndFeature">
-                    <div class="glassBG">
-                        <div>
-                            <h3>Latest Blog- </h3>
-                            <h2>{{Title}}</h2>
-                        </div>
-                        <h3 syle="padding-top:0px;">{{Header}}</h3>
-                        <p>{{Text}}</p>
-                        <sub><em></em>{{Date}}</sub>
+            <div dyn="n" record="./blogs.txt as blogs" shape="ParseForBlogs" filter="FilterOutMicroAndFeature">
+                <div class="glassBG">
+                    <div>
+                        <h3>Latest Blog- </h3>
+                        <h2>{{Title}}</h2>
                     </div>
+                    <h3 syle="padding-top:0px;">{{Header}}</h3>
+                    <p>{{Text}}</p>
+                    <sub><em></em>{{Date}}</sub>
                 </div>
+            </div>
         </div>
         <h2 class="header-glow Collapseable microsHeader ">Micros </h2>
-        <div class="carousel  Collapseable" dyn="n...0" record="blogs" plate="./plates/MicroEntry.html" shape="ParseForBlogs" filter="FilterForLength"></div>
-            
-            <h2 class="header-glow spotLightHeader Collapseable ">Blog Spotlight</h2>
-            <div class="glassBG FeaturedBlog shadow-container Collapseable">
+        <div class="carousel  Collapseable" dyn="n...0" record="blogs" plate="./plates/MicroEntry.html"
+            shape="ParseForBlogs" filter="FilterForLength"></div>
 
-                <h1> Apple's September 2024 iPhone Event</h1>
-                <div dyn record="blogs" shape="ParseForBlogs">
-                    <div dyn="57">
-                        <sub>{{Date}}</sub>
-                        <h2>{{Header}}</h2>
-                        <p>{{Text}}</p>
-                    </div>
-                    <div dyn="56...52">
-                        <h3>{{Header}}</h3>
-                        <p>{{Text}}</p>
-                    </div>
+        <h2 class="header-glow spotLightHeader Collapseable ">Blog Spotlight</h2>
+        <div class="glassBG FeaturedBlog shadow-container Collapseable">
+
+            <h1> Apple's September 2024 iPhone Event</h1>
+            <div dyn record="blogs" shape="ParseForBlogs">
+                <div dyn="57">
+                    <sub>{{Date}}</sub>
+                    <h2>{{Header}}</h2>
+                    <p>{{Text}}</p>
                 </div>
+                <div dyn="56...52">
+                    <h3>{{Header}}</h3>
+                    <p>{{Text}}</p>
+                </div>
+            </div>
         </div>
         <h2 class="header-glow Collapseable pastBlogsHeader ">Past Blogs
         </h2>
-        <div class="glassStack Collapseable" dyn="n-1...0" record="blogs" plate="./plates/BlogEntry.html" shape="ParseForBlogs" filter="FilterOutMicroAndFeature"></div>
+        <div class="glassStack Collapseable" dyn="n-1...0" record="blogs" plate="./plates/BlogEntry.html"
+            shape="ParseForBlogs" filter="FilterOutMicroAndFeature"></div>
 
     </div>
 </body>
 <script>
     function FilterForLength(records) {
-        return records.filter(record => { return record.Text.length<=150 || (record.Title === 'Micro' && record.Header === 'Micro')});
+        return records.filter(record => { return record.Text.length <= 150 || (record.Title === 'Micro' && record.Header === 'Micro') });
     }
     function FilterOutMicroAndFeature(records) {
-        return records.filter(record => { return (record.Title !== 'Micro' && record.Header !== 'Micro') && record.Text.length > 150  && record.Title !== 'iPhone Szn'});
+        return records.filter(record => { return (record.Title !== 'Micro' && record.Header !== 'Micro') && record.Text.length > 150 && record.Title !== 'iPhone Szn' });
     }
     function ParseForBlogs(data) {
         return data
@@ -387,33 +98,33 @@
     }
 
     document.querySelector('.FeaturedBlog').addEventListener('click', (function () {
-    let isExpanded = false;
-    let savedScrollPosFeatured = 0;
-    return function (e) {
-        let toBeCollapsed = document.querySelectorAll('.Collapseable:not(.FeaturedBlog, .spotLightHeader)');
-        if (isExpanded) {
-            document.querySelector('.FeaturedBlog').classList.remove('expanded');
-            for (let i = 0; i < toBeCollapsed.length; i++) {
-            toBeCollapsed[i].classList.remove('Collapsed');
-            
-            console.log(savedScrollPos);
-            window.scrollTo({ top: savedScrollPos, left: 0,behavior:'instant' }); 
-            
-        }
-        } else {
-            document.querySelector('.FeaturedBlog').classList.add('expanded');
-            savedScrollPos = window.scrollY;
-            for (let i = 0; i < toBeCollapsed.length; i++) {
-            toBeCollapsed[i].classList.add('Collapsed');
+        let isExpanded = false;
+        let savedScrollPosFeatured = 0;
+        return function (e) {
+            let toBeCollapsed = document.querySelectorAll('.Collapseable:not(.FeaturedBlog, .spotLightHeader)');
+            if (isExpanded) {
+                document.querySelector('.FeaturedBlog').classList.remove('expanded');
+                for (let i = 0; i < toBeCollapsed.length; i++) {
+                    toBeCollapsed[i].classList.remove('Collapsed');
 
-            window.scrollTo({ top: -10, left: 0,behavior:'instant' }); 
-            console.log(savedScrollPos)
-        }
-        }
+                    console.log(savedScrollPos);
+                    window.scrollTo({ top: savedScrollPos, left: 0, behavior: 'instant' });
 
-        isExpanded = !isExpanded;
-    };
-})());
+                }
+            } else {
+                document.querySelector('.FeaturedBlog').classList.add('expanded');
+                savedScrollPos = window.scrollY;
+                for (let i = 0; i < toBeCollapsed.length; i++) {
+                    toBeCollapsed[i].classList.add('Collapsed');
+
+                    window.scrollTo({ top: -10, left: 0, behavior: 'instant' });
+                    console.log(savedScrollPos)
+                }
+            }
+
+            isExpanded = !isExpanded;
+        };
+    })());
 
 </script>
 
