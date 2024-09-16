@@ -130,4 +130,4 @@ glassStack.addEventListener('scroll', () => {
     }
 });
 
-setTimeout(createGlassStack, 100);
+setTimeout(createGlassStack, 500);

@@ -161,7 +161,7 @@ class DynPair {
       this.#Plate.BindRecordToProps(this.#Record.Record, recordIndices);
       this.#Plate.RenderPlate(indexs[i]);
       let plateCopy = parser.parseFromString(this.#Plate.PlateObj.Render, 'text/html');
-      plateCopy = plateCopy.childNodes[0].childNodes[1].childNodes.length === 1 ? plateCopy.childNodes[0].childNodes[1].firstChild : plateCopy.childNodes[0].childNodes[1];
+      plateCopy = plateCopy.children[0].children[1].children.length === 1 ? plateCopy.children[0].children[1].firstChild : plateCopy.children[0].children[1];
       plateCopy.id = `${this.#Plate.GenerateGUID()}#${indexs[i]}`;
       plateCopy.querySelectorAll('[recordIndex]').forEach((dyn) => {
       dyn.getAttribute('key') == this.#Plate.PlateKey ? dyn.setAttribute('recordIndex', dyn.getAttribute('recordIndex').concat(recordIndices)) : null;
