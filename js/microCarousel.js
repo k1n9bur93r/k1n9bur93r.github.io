@@ -36,7 +36,7 @@ slideshow.addEventListener('scroll', () => {
       isScrolling = false;
       updateSlide();
     }
-  }, 100); 
+  }, 200); 
 });
 
 setTimeout(updateSlide, 100);
