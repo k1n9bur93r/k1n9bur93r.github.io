@@ -113,7 +113,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-document.addEventListener('mousemove', 'touchmove', (() => {
+document.addEventListener('pointermove', (() => {
     let mouseMoveCounter = 0;
 
     return (e) => {
