@@ -1,42 +1,22 @@
-const slideshow = document.querySelector('.carousel');
-let isScrolling = false;
-let cards;
-let initialLoad = true;
 function updateSlide() {
-if(initialLoad)
-  {
-  cards = document.querySelectorAll('.card');
-  initialLoad = false;
+  const carousel = document.querySelector('.carousel');
+  if (carousel) {
+    const containerRect = carousel.parentElement.getBoundingClientRect();
+    const containerMid = containerRect.left + containerRect.width / 2;
+    const cards = document.querySelectorAll('.card');
+    cards.forEach((card) => {
+      const cardRect = card.getBoundingClientRect();
+      const cardMid = cardRect.left + cardRect.width / 2;
+      if (Math.abs(cardMid - containerMid) < cardRect.width / 2) {
+        card.style.opacity = 1
+        card.style.opacity = 1
+        card.style.transform = 'scale(1.2)'
+      } else {
+        card.style.opacity = .5
+        card.style.transform = 'scale(1)'
+      }
+    });
   }
-  const containerRect = slideshow.parentElement.getBoundingClientRect();
-  const containerMid = containerRect.left + containerRect.width / 2;
-
-  cards.forEach(card => {
-    card.classList.remove('visible-1', 'visible-2', 'visible-3', 'visible-4', 'active');
-    const cardRect = card.getBoundingClientRect();
-    const cardMid = cardRect.left + cardRect.width / 2;
-
-    if (Math.abs(cardMid - containerMid) < cardRect.width / 2) {
-      card.classList.add('active');
-    } else if (Math.abs(cardMid - containerMid) < cardRect.width / 1.5) {
-      card.classList.add('visible-1');
-    } else if (Math.abs(cardMid - containerMid) < cardRect.width / 0.75) {
-      card.classList.add('visible-2');
-    } else {
-      card.classList.add('visible-3');
-    }
-  });
-slideshow.addEventListener('scrollend', updateSlide);
+  requestAnimationFrame(updateSlide)
 }
-
-slideshow.addEventListener('scroll', () => {
-  isScrolling = true;
-  setTimeout(() => {
-    if (isScrolling) {
-      isScrolling = false;
-      updateSlide();
-    }
-  }, 200); 
-});
-
-setTimeout(updateSlide, 100);
+updateSlide();
