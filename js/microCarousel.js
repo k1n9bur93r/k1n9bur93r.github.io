@@ -7,14 +7,9 @@ function updateSlide() {
     cards.forEach((card) => {
       const cardRect = card.getBoundingClientRect();
       const cardMid = cardRect.left + cardRect.width / 2;
-      if (Math.abs(cardMid - containerMid) < cardRect.width / 2) {
-        card.style.opacity = 1
-        card.style.opacity = 1
-        card.style.transform = 'scale(1.2)'
-      } else {
-        card.style.opacity = .5
-        card.style.transform = 'scale(1)'
-      }
+      const isCentered = Math.abs(cardMid - containerMid) < cardRect.width / 2;
+      card.style.transform = isCentered ? 'scale(1.2)' : 'scale(1)';
+      card.style.opacity = isCentered ? 1 : 0.5;
     });
   }
   requestAnimationFrame(updateSlide)
