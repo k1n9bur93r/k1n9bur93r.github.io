@@ -289,3 +289,7 @@ This is by far the most amount of 'visual' work put into the site so far. For th
 Micro
 Micro
 Hello Micros! New Format from the iPhone action button. Past thoughts of less than 150 chars.
+---9/17/24
+Micro
+Micro
+Officially fully working micros from the Siri shortcut, it was bugged out for a while. Weird! 
