@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K1n9's blog space</title>
-    <script type="module" src="js/dyn.js"></script>
+    <script type="module" src="out/DynPages.js"></script>
     <script type="module" src="js/canvasBg.js"></script>
     <script type="module" src="js/glassStack.js"></script>
     <script type="module" src="js/microCarousel.js"></script>
@@ -14,7 +14,7 @@
 
 <body>
     <canvas></canvas>
-    <div class="content">
+    <div dyn class="content" record="./blogs.txt as blogs" shape="ParseForBlogs">
         <div class="Collapseable">
             <h1 class="header-glow " style=" margin-top:5%;">K1n9Bur93r</h1>
             <div class="HeaderGlass">
@@ -39,7 +39,7 @@
             </div>
 
             <h2 class="header-glow "> Newest Blog</h2>
-            <div dyn="n" record="./blogs.txt as blogs" shape="ParseForBlogs" filter="FilterOutMicroAndFeature">
+            <div dyn="n"  filter="FilterOutMicroAndFeature">
                 <div class="glassBG">
                     <div>
                         <h3>Latest Blog- </h3>
@@ -52,13 +52,13 @@
             </div>
         </div>
         <h2 class="header-glow Collapseable ">Micros </h2>
-        <div class="carousel Collapseable" dyn="n...0" record="blogs" plate="./plates/MicroEntry.html" shape="ParseForBlogs" filter="FilterForLength"></div>
+        <div class="carousel Collapseable" dyn="n...0" plate="./plates/MicroEntry.html" filter="FilterForLength"></div>
 
         <h2 class="header-glow spotLightHeader Collapseable ">Blog Spotlight</h2>
         <div class="glassBG FeaturedBlog shadow-container Collapseable">
 
             <h1> Apple's September 2024 iPhone Event</h1>
-            <div dyn record="blogs" shape="ParseForBlogs">
+            <div >
                 <div dyn="57">
                     <sub>{{Date}}</sub>
                     <h2>{{Header}}</h2>
@@ -72,8 +72,7 @@
         </div>
         <h2 class="header-glow Collapseable pastBlogsHeader ">Past Blogs
         </h2>
-        <div class="glassStack Collapseable" dyn="n-1...0" record="blogs" plate="./plates/BlogEntry.html"
-            shape="ParseForBlogs" filter="FilterOutMicroAndFeature"></div>
+        <div dyn="n-1...0" class="glassStack Collapseable"  plate="./plates/BlogEntry.html" filter="FilterOutMicroAndFeature"></div>
 
     </div>
 </body>

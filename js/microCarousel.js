@@ -12,6 +12,6 @@ function updateSlide() {
       card.style.opacity = isCentered ? 1 : 0.5;
     });
   }
-  requestAnimationFrame(updateSlide)
+  requestAnimationFrame(updateSlide);
 }
 updateSlide();

@@ -2,6 +2,10 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.1.1",
+    "@types/bun": "latest",
+    "add": "^2.0.6",
+    "bun": "^1.1.29",
+    "bun-plugin-html": "^2.0.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.29.1",
@@ -9,5 +13,12 @@
   },
   "scripts": {
     "lint": "eslint ./"
-  }
+  },
+  "name": "k1n9bur93r.github.io",
+  "module": "dyn/DynPages.ts",
+  "type": "module",
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "build-browser": "bun js/build.ts"
 }
