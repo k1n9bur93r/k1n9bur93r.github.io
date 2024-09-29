@@ -13,9 +13,9 @@ const c = canvas.getContext('2d');
 let canvasRect = canvas.getBoundingClientRect();
 function resizeCanvas() {
   const dpi = window.devicePixelRatio;
-  canvas.width = innerWidth * dpi;
-  canvas.height = innerHeight * dpi;
   canvasRect = canvas.getBoundingClientRect();
+  canvas.width = canvasRect.width * dpi;
+  canvas.height = canvasRect.height * dpi;
   c.restore();
   c.scale(dpi, dpi);
 }
