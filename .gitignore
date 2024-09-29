@@ -183,3 +183,4 @@ node_modules/@jridgewell/sourcemap-codec/dist/sourcemap-codec.umd.js.map
 node_modules/@jridgewell/sourcemap-codec/dist/types/sourcemap-codec.d.ts
 node_modules/eslint-visitor-keys/package.json
 node_modules/eslint-visitor-keys/README.md
+.vercel

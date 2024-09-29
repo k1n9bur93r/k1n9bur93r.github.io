@@ -1,24 +1,15 @@
 {
-  "devDependencies": {
-    "@eslint/eslintrc": "^3.0.2",
-    "@eslint/js": "^9.1.1",
-    "@types/bun": "latest",
-    "add": "^2.0.6",
-    "bun": "^1.1.29",
-    "bun-plugin-html": "^2.0.0",
-    "eslint": "^8.57.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "globals": "^15.0.0"
-  },
-  "scripts": {
-    "lint": "eslint ./"
-  },
   "name": "k1n9bur93r.github.io",
-  "module": "dyn/DynPages.ts",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "build-browser": "bun js/build.ts"
+  "devDependencies": {
+    "typescript": "^5.5.3",
+    "vite": "^5.4.1"
+  }
 }
