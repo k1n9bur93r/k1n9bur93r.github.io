@@ -1,0 +1,325 @@
+12/3/23
+Hello World, PING 
+This is a start.
+This is the first message used to build the simple blog file
+---12/3/23
+Good day, PONG
+Need something to demo?
+And this is the second message needed to show that we can indeed parse...
+---12/4/23
+Start of Day Two
+templates and rendering
+Day one was kinda slow, but most of it was building the idea that I want to implement today, I think I will be able to execute quick with this.
+---12/4/23
+Wowowow
+gotta deal with the cat
+Okay I kinda mindfucked myself a little bit here, if I can get out of this knot I invented something epic
+---12/4/23
+Booyah!
+VIP Established
+I took this way farther than I expected today, I created a new object called dynaElement that can take in a generic object and a generic template and return a document fragment that has all of it's values bound. how cool!!!
+---12/5/23
+Putting a Bow on it
+How well can we scale our design?
+Going to bed last night my mind was so focused on the idea of createing a 'dynTemplate' style page that is able to accept a series of data elements, and html templates and can exert more control how dynElements are rendered. I think I can build off of what was made before to get that working within an evening.
+---12/5/23
+oops.
+cringe.
+Sometimes I code the most stupid things without realizing what I am doing. I focus too much on creating setters and getters I realize I'm not actally doing anything lol.
+---12/5/23
+Salvage
+puttin 2 n 2 2getha
+Okay yeah things got kinda weird for a moemnt, they still are, but I've been able to expand my conept a bit, made a lot less progress 2nite, don't really have anything to show. BUT I have a lot of gold nuggets I just need to parse out from this
+---12/6/23
+Siri Shortcut Posting
+Hell yes
+I need to refine this more, but i can post kinda quickly from my phone.
+---12/6/23
+Siri Shortcuts!
+Keep it local
+I have a Siri shortcut that I can trigger with my iPhone’s action button. It throws up input UI for the blog entries and copy’s a blog to my keyboard I bet I can get even more clever with this…
+---12/6/23
+Hehe
+I love this 
+So raaaaad
+---12/6/23
+UNLV
+Crazy
+This one feels a bit more close to home, for obvious reasons. It’s all so senseless.
+
+---12/6/23
+Hey Aus
+Look at this!
+All automatic, took my doing time tonight to get this shortcut polished
+
+---12/7/23
+Dealership day
+What to do
+I’m getting pressured to buy out my old lease, need to figure out if/how I can haggle the price down
+
+---12/7/23
+Mmm ice cream
+Long day
+I had one big thing I needed to do today, but had three mini things and one medium thing so I didn’t really have that much time for my main thing. I’d say I’m at like 50% I just hope that most of the heavy lifting happened today rather than tmrw. Idk if I will work on the templates 2nite :(
+
+---12/9/23
+Gaming
+We go hard
+Another long day of BS. Good news is that I did the conversion, which involved a lot more messing around with code than I thought previously.  I think I also did 70% of the hard work for converting things over to being fully parallelized 
+
+---12/9/23
+Progress…
+Async hell holes
+Back on the progress train! So the good news is that despite the lag in returning to work, I remembered more than I thought I would. The bad news is that while I did indeed write some kind of code before, a lot of it was disjointed and it took most of the day to get to a point where objects have been able to chain and initialize each other. I’m now running into some standard JS async stuff. Since everything on the page needs to be fetched, there are a lot of items that need to load their contents, for other items to load their own. THEN the main page has to place everything. I think I need to throw in some callbacks and make it so my classes don’t initialize themselves? 
+
+---12/10/23
+Containers!
+We getting meta 
+Okay, so I know that there is a way where this can be back ported to the ‘dynElement’ object, but we have a simple enough templating system in the works.  So the new flow is the following dynContainer->dynObject(blogData),dynObject(blogHtml),dynObject(containerHtml). The ‘dynObjects’ handle all the fetching of our information, then the container combines the blog information into ‘dynElements’ which are then placed within the ‘dynContainer’’s template. So kinda meta? 
+
+---12/10/23
+Dad Demo
+Demo demo demo
+It’s fun showing ppl stuff. Especially when it is a whole new world. 
+
+---12/13/23
+We are coding today
+I’m gonna do it
+I stg I did enough non personal project shit, I’m gonna clack some keys today
+
+---12/14/23
+Test title
+Look at this
+Hi this is a try 
+
+---12/15/23
+Daily work
+The grind
+I keep on wanting to do other things than code for work, but so late in this release cycle I just see more and more things that can be polished. All my efforts have been getting dumped into that hard core 😓
+
+---12/16/23
+Brooklyn bowl!
+Being social and shit
+Gonna see an actual concert soon, kinda rare I think the last time was def over a year ago. Obvi festivals don’t count. Should be hyped, if my back can withstand all the waiting around haha
+
+---12/25/23
+Merry Christmas🎄
+Wrapping up the year, unwrapping gifts.
+I think it’s fair to say that the defining metric of this year has been stress. Life stresses, work stresses, maybe even personal stresses. I have been able to learn so much, kinda been  forced too. There are a lot of things that I wish I could have better executed, but at the end of the day I am no worse for wear, and I’ve gained a whole lot of experience. I guess that’s what life kinda starts to cycle into. I kinda hope not though haha. I’ll leave that judgement for when I am older. These past few days have been the first where I have not been driving myself off a cliff each week writing code and cleaning things up for work. I’m actually kinda impressed that I managed to crank out this site at all. It’s funny but despite all that effort the best thing about it is not what I made on my own, but being able to post from my iPhone with its' action button. I would have only ever written like three ‘blogs’ otherwise. I’m not out of the woods yet for work, and afterwards I hope to burn some vacation days and give myself a bit of a break, but I really do want to expand this site. I like having it. I feel that so much of me is online, but much like life so much of the spaces I do exist in are places that are not my own. Kind of like renting. I want to own a home. I’m still stuck in the system, but at least I can say that I own something in it. I hope everyone takes the time to reflect on what they learned this year, and take those notes with them. Best of luck!
+
+---1/12/24
+Snowboarding!
+First snow of the season 
+Finally hitting the snow, I have been super looking forward to flying down a mountain again! Hopefully I can cram a bit more in before the spring.
+
+---1/16/24
+Tinkering 
+The projects keep marching on
+I think I am on a bit of a roll with the ‘next step’ of the dynamic page JS stuff. The idea is similar, but hopefully better executed. Also the Apple Vision Pro pre order date has me thinking some big thoughts on how the future might shake out, and especially Meta. I’ve been playing hand off on these items. Hopefully tomorrow I can give both a bit more attention. 
+
+---1/19/24
+Vision Pro Day Zero
+A Big Day!
+This is probably the hardest I’ve ever simped. I’m planning a vacation along side this preorder and even with all my might I don’t think I’ll be able to beat that order price. Insane! 
+
+---1/21/24
+Go Wolfe Glick!
+A fun little hobby
+I’ve gotten more into doubles competitive Pokémon in the past two years, there is a lot to dig into as far as strategy and the Roshambo-ness of all the typing match ups. Throw in a really good gimmick feature for this generation, it has lead to an excellent variety of play. On top of that seeing a meta that can evolve so quickly from game to game drives a lot of attention between a fairly frequent regional championship cycle. I’d say this is the most invested in a game I’ve ever been in without even touching it! Today was the biggest regional competition by player count ever, and my favorite YouTuber almost did a clean sweep through the competition. Always fulfilling! Even if it is the equivalent of rooting for Tom Brady, or LeBron James lmao.
+
+---1/30/24
+The "Android" of Anything…
+What low goals to aspire for.
+Meta is making some waves in the VR community based on their self description of being the android VR headsets. From a strict sense I suppose that’s true, their quest platform is built off of android, their applications are APKs and their future is tied to the work that Google puts out. Which makes their positioning all the more curious.If anyone is going to be the Android of something surely it would be Google not someone copying their homework, right? Ignoring that though, what a sad fate to allow yourself to fall into! Meta had years of advance notice to build the Quest platform. The best they could muster is second fiddle, before any true competition, and they seem to be proud of it?! The fact that there is no native VR version of Instagram or it’s Reels product blows my mind.  I think this goes to show if anything, the mind games that Apple is still able to get others to jump though.I hate so dearly my developing default trust in Apple, but there really is nothing quite like good well put together hardware and software. I’ve been on both peaks of the mountain. The grass on this side really is quite green. It’s OK to shoot for being the ‘Android’ of anything, but that speaks more to issues of self-confidence and quality than it does aspiration.
+---1/31/24
+This should be Twitter
+Better heard than read 
+It's silly to have to go back and do massive rewrites of text to speech audio dumps for topics that I could probably convey better when talked about casually lmao!
+
+---2/4/24
+Stop Selling me Shit
+Genuine products only 
+We have fallen into a trap of companies selling us shit that isn’t real. The business make no money, the products are good but unviable. Sell me the thing that can keep your company afloat, convince me THAT is good. Blitzscaling sucks! 
+
+---2/6/24
+It works
+Holy shit
+It’s already not perfect, and interior lens reflections are a tough pill to swallow, but wow you can actually compute with this thing. Interactions that were the dream of CGI demos just 4 days ago are real now. Wowowow
+
+---2/8/24
+First!
+Has to be…
+I’m pretty sure I am the first person to fill out for a new passport using the Vision Pro lol
+
+---2/16/24
+Hi Wargen
+This is what the button does
+I enjoy using buttons
+
+---2/21/24
+Dyn Progress
+Agonizing 
+I am for sure not following my own advice when it comes to building feature by feature. I have prototyped, debugged to near completion, then major refactored multiple times over at this point. Though with each iteration things feel more right. Hopefully a good sign!
+
+---2/23/24
+Found my way back 
+New challenges 
+Okay I think I caught up to where I was last week lol. My initial plan was to perform validation and rendering as a post tree creation process, but now each node is handling itself as the tree is being built. I will never make anything that will benefit from any kind of optimization tricks…but hopefully the JavaScript looks cooler?
+
+---2/25/24
+FIRST PERSON COMPUTER
+i get it now…
+If you THINK about it. A 3D operating system (((visionOS))) it’s actually just fuckin Windows/MacOS. You have a desktop view in both, windows that you keep open. Though it’s nothing special because we can only keep those on the SCREEN. The windows now just float around in 3D space. It’s like you are in a little bubble of computer. It’s actually kind of cracked. If only we had access to a real file system and tools like macOS. So you could do real things natively. Oh man that would be sweet.
+
+---2/26/24
+dynPages 1.1
+Tinker Fast
+I think it's fun once you get past the 'design' in the specific way that building new ideas becomes a much quicker process. It's like you've gained a position of tinker power. I realized needing to do Prop="variablePropName" is a boring way to handle value setting. Now using a much more sensable {{variablePropName}}. Less of that is good. Also changed the way that the content of a dyn is rendered,uses some of the javascript soup magic that I LOVE. Didn't save much code but hooopefully it has some room for new features. Also added a bit more logic to for loops, you can iterate a list in reverse and set the distance from the last element you want to hit. like length-5. Kinda fun!
+---2/27/24
+dynPages 1.2
+Savant 
+A resource can be ‘cached' by storing the source in a hash table, then all other requests for that resource draw from the table rather than fetching. In the event that the inital request is not done fetching any following requests will idle till the map’s value has been updated…is this smart or stupid lol?
+
+---3/11/24
+Match Results! 
+Big days still to come
+I love you Bita!!! Congrats on making it into residency, never a question! Now the next question will be answered this Friday…oh where did you match into? 
+
+---3/12/24
+dynPages 2.0?
+Believe it or not…
+After two weeks of toiling away, I think I was able to crack the problem I think! I need to do a fuck ton of clean up, but if the base is good then I will feel excited to hop back and build some new ideas laterrrrrr.
+
+---3/14/24
+Vision Pro Blog! 
+Round Two…
+Getting Siri Shortcuts up and running on this has been a breeze I THINK. Glad the iOS Git app I use is available on the Vision Pro…how cool is that ! I need to figure out a way how to attach images or videos to these blogs hehe.
+
+---3/15/24
+Future decided! 
+Salt Lake it is
+Busy day today, Bita knows where she is going for residency, and that means my next few years are set up. Part of me thinks that other cities could have been more exciting, but I think practically speaking this is the best move. A right sized pond.
+
+---3/21/24
+Everyone is Releasing an Album 
+Eating good in 2024
+Justice, Gesaffelstein, Caravan Palace all of em dropping absolutely stellar music within a shared few months, what are the odds! Feast then famine I swear to God.
+
+---3/22/24
+NoSQL Actually Sucks
+THINK about it 
+Not like, a super brave opinion this day and age…BUT still the amount of solutions that exist, just to handle the situation we have created for ourselves by blasting away massive JOSN blobs rather than the results from properly defined queries across a planned relational DB… 99.9% of us will not have user or data demands to justify the loss of ACID transactions for the sake of scale.
+
+---3/23/24
+DynPages 2.1
+End game! 
+First, I managed to get recursive structures working, which was a big lift. Now we can do nested objects, bigger lift than I expected lol, but also, I feel like I had the problem figured out way earlier, and it was just a matter of taking my time with implementation, I junked a lot less code this time around. Final step is to get arrays working. these will be difficult, because the challenge the fundamental assumption of every property having a name…fun.
+
+---3/23/24
+Eat crumbs
+Do it
+You are a biped eat crumbs. If you see crumbs on the table, eat them you are more powerful than the crumbs eat the crumbs.
+
+---3/29/24
+DynPages 2.2
+🫵😂
+Okay, arrays are in. Solving these problems have turned my code into more and more of a mess. I hope to clean things up soon, then build out two more things in my head then we can call this ‘done’. Probably will set up a git hub page and do whatever silly open sourcing with it too. Then I can finally start touching my actual site again haha
+
+---3/29/24
+Oh wait shit
+💀
+Okay there are like 4 or 5 things that still need to be done I think. THESE SHOULD BE EASIER PROBLEMS, so help me god lol
+
+---4/23/24
+Config Files…
+The forever pain 
+I have spent many hours these past two weeks attempting to debug remote builds, this is some of the most soul sucking work :(
+
+---7/20/24
+New home who dis 
+Unforeseen odors 
+New house, awesome, lack of ventilation and grease smell, not cool not cool. How do you get rid of an old smell like really how.
+
+---8/30/24
+Space X Starship
+Amazing and Difficult! 
+One of the coolest things, that I have the pleasure of keeping track of, is the development of SpaceX’s Starship program and all the infrastructure work that goes along with it. Space flight is cool. Probably the coolest thing that we as people can do. There is some sort of magic pixie dust in SpaceX that allows them to just keep building. They have made 33 models of Starship so far. Each time learning and refining. Compare that to the billions spent on just trying to develop NASA’s SLS program. Don’t get me wrong, I love NASA if I could send all my tax dollars to them I would. Every cent well spent. That being said I am so impressed by how fast SpaceX is willing to move, and how efficient they seem to be while doing so. I think the only problem, for me at least, is that Elon is at the helm. Oh I wish for a world where he didn’t have a Twitter addiction that pushed him to where he is now. It makes for a level of cognitive dissonance that sucks! I just want to enjoy this future tech without having to deal with his blabbering every other day. Being less terminally online would solve this problem sure, but realistically that would also kill the attention to this space program that I enjoy so much! I can say one thing though, I’m sure there is at least one person working on the Starship program that feels the same way, and whatever they are feeling must be 100x more distressing than what I can understand as an observer. So for their sake, I’m staying hyped and looking forward to everything they do!
+
+---9/9/24
+iPhone Szn
+Final Notes
+I like how the Apple TV app lets you watch the event live, low hanging fruit but feels in ecosystem. Watching the event on the Vision Pro was fun, especially in the cinema environment, the other side of this coin serves to highlight how Apple still hasn't figured out how to make best on their Apple Immersive format for Vision. This is a large scale pre-produced video so they have a good excuse to not have done this, however if they ever make a return to in person events I would expect a live stream in Apple Immersive. Additionally for the Vision Pro, I was hoping for some new clutch ecosystem interactions, but sadly no dice. Just the ability to take Spatial Photos from iPhone, which can already be generated from previous phots on the Vison Pro (albeit with some sacrifices to the framing of an image). I'm positive Apple has a pile of tech debt and basic UX the size of Everest to overcome before we can see any real slick things coming to the world’s best and only face computer. Back to the pre-produced stream, did you notice the amount of 'fade to black' transitions in this year's event? Don't get me wrong, there were still a few fun transitions (the one zooming and rotating out from the San Fran cityscape to the wall mounted map was  neat!), but it felt like there were more 'fade to black' between scenes than ever. Running out of ideas?  Last minute footage that needed to be captured? Who knows! Continuing to poke fun at the seemingly mushy in the middle things, the Apple Store! It's product pages undulating more than ever, though this year it feels notably laggy and stuttery. The product hero sections take forever to load, even mid page...multiple times. Never had this problem on launch day before. Maybe their webstack is finally due for an update. This year's event was a fun one, but also one where there might be some of the least compelling reasons to upgrade ever? Anything truly notable was already made known at WWDC. Thinner watches, and new buttons just wont cut it for what is now a tired saturated base of a smartphone market. Next year might shape up differently, the rumor mill is pointing to a super slim iPhone Air, and I’m excited to see what else!
+
+---9/9/24
+iPhone Szn
+iPhoneables: The Software
+'Apple Intelligence'! I hate to ride the meat on that thing till it falls off, but I gotta say just how cute that name is. Apple Watch, Apple Vision (Pro), Apple Intelligence! They are claiming whole categories of existence now, my goodness. It's a cheeky name that can probably be trademarked to hell, truly amazing stuff. Though what does it do for people with an iPhone 16 and up? Not much really? Which is kind of surprising, I was genuinely looking forward to a few exclusive "AI" features for the 16s. From my understanding they only got one, 'Visual Intelligence'. It looks like an extension of Siri's new voice model, but rather than taking text as input, a user can trigger it with a press of the 'Camera Control' button (which begs the question if this is truly limited to the new iPhones or just made more convenient on them). The semantics from these photos can be used to search for information, create calendar events, or (I'm assuming) other things that the New Siri will be able to do with your 'Personal Context' and 'App Insights' that were announced at WWDC. Also similar to New Siri's the third party LLM API, Apple will allow the passing of these images to a user choice of visual search and LLM products, like Google Lens or ChatGPT. Yes yes, a potentially locked down API ensures that Apple always gets their cut if they desire it- but hey, user choice and all. I think the only other item we learned is just how much of 'Apple Intelligence' is going to be coming to us in chunks. Which is fair, if not disappointing. There are a lot of changes coming to iOS 18, I'd wager maybe the most ever, and these things just take time. It's already impressive that Apple, notoriously slow, was able to pivot and invernt their version of 'AI' so quickly. I think Apple is genuinely the best positioned company to deliver on all that generative AI can promise people. So much of our lives pass through our phones, having a computer that is contextually aware and able to surface these things can truly be game changing. Hell, seeing the Weather widget pop up letting me know it’s going to rain in 15 minutes, or when my next Zoom meeting is due does feel like magic. If our existing emails, text messages, DMs, photos, and files can be marshaled into similar magic, I’m down. Out of any big tech conglomerate, I feel that Apple has the best chance at doing so without completely blowing open Pandora’s Box of privacy violations. We will know how successful this all will be in one year's time.
+
+---9/9/24
+iPhone Szn
+iPhoneables: The Hardware
+This is a yin-yang year for iPhones. In multiple ways. The standard iPhone was by far the star for feature upgrades, while the Pro was left scraping the bin more than usual. This year also demonstrated the amount of value that can be delivered from free software updates for existing users, while also shipping probably the most impactful physical update ever for iPhone. Before getting sucked into Apple Intelligence, we gotta talk about another new button! The second year in a row, when it rains it pours. Elegantly rumor mill-ed as the 'Capture' button , Apple stubbornly decided to go with the clunky name the 'Camera Control' button. This thing is the nuts. Taking an obvious idea implemented by the likes of Sony with their Xperia devices, Apple has added an easier way to take photos with the camera they try to sell you each year. Make this not make sense, I dare you. Really though. The magic to taking a photo is being in the moment, looking through your viewfinder and adjusting your tool to capture the perfect shot. Which is exactly why taking photos on a phone has always sucked ass, because half your brain’s attention is diverted away from the "zen" composition experience to manage a fiddly touched based UI. God forbid you want to be thoughtful with your camera settings. Which cleary is why the savior to this decades long mental thorn in the side is a...touch capacitive button? Make it make sense...I dare you! No ,actually, really though. It's a massive deal because the ergonomics of trying to take that photo will improve dramatically. You will still need to fiddle if you want to change settings, now at least that fiddling will be centralized to one place, rather than needing to drag your finger all over the screen to achieve the same thing. It's the closest to the photographer's "zen" an iPhone has been able to deliver, and for the amount of hoopla cameras get from manufacturers and consumers this is a massive change. This super fancy button is coming down to both Pro and Non Pro phones. The Non Pro iPhone is having a stellar year, truly. Its processor generation is on par with the Pro on account of Apple Intelligence, it's getting Spatial Video capture and the action button from last year's Pro. The new video audio editing pipeline and post facto expressive color filters are being shared across both phones too. I think the only meaningful difference for the Pro now is the Pro Motion display. Which is of course worth the extra 200 dollars. So grind your loins ever eager consumer, Apple will keep those benjamins yet. 
+
+---9/9/24
+iPhone Szn
+Wearables
+Each year demands a new Apple Watch, and this is usually the category that Apple has the hardest time drumming up suspense. 2024 marks the tenth named Apple Watch Series (though technically we are on the eleveth generation now) and like for iPhone X, eager consumers were hoping for a lot, and mostly did not get it. Though I do think Apple did deliver the most reasons to update a Watch in a while all due to the new formfactor and finishes. The thinning of the Watch is a pretty big deal, in the same way that ditching stainless steel for titanium in last year's iPhones was a big deal. These changes to ergonomics make old things feel new, and it's a lot easier to sell something when the change is felt. Apple Watches have always been pebble-y in their design, inoffensive and friendly, but also noticeable on the wrist. Thinning the Watch out makes it easier to slip under shirts and straps, keeps the center of mass closer to the skin, and makes it less likely to ding on door frames. It pushes more towards ambient computer than gadget on the wrist, that's meaningful! This change can be doubly enjoyed with the new materials and finishes for the Watches. Titanium replacing stainless steel is a literal copy of last year's iPhone Pro play, and that was a good one. Apple also pulled out a new stop for the aluminum Watches, bringing a polished surface to spruce up the tacky bead blasted matte finish that unfalteringly highlighted that you cheaped out on an Apple Watch Sport. Did I mention that it looks exactly like the iPhone 7’s Jet Black finish? The most beautiful of iPhone colorways ever introduced? Did I also mention that the titanium Watches brought back the Series 4 gold finish, likewise the prettiest Watch color ever? Speaking of colors, that was the entire feature for the Watch Ultra this year, a more black-y black. Actually I feel for the Watch Ultra, it's unique material choice is now shared, and hell it no longer has the largest screen size of the Watches. Next year should make for a derserved update, less the Watch Ultra be emasculated further.
+
+---9/9/24
+iPhone Szn
+Hearables
+It’s a big year for Airpods, Three (four?) announcements and two of those were a win for consumers. The existing Pro 2s got a major new feature, they can now act as clinically approved over the counter hearing aids. A big step for Apple's health goals in the short term, and a massive demonstration of their desire to put an Apple product between our natural human senses and the world. Genuinely though, being able to apply an elegant and universal solution to something as common and "solvable" as hearing loss is a big deal. I'm eager to update and let my father give the feature a spin. If impactful, it's worth spending the money to get him in the ecosystem. One simply can't take hearing for granted, nor your parent's health. Easier to convince someone to use earbuds than have them wear hearing aids 😵. Consumer win number 2, those who shelled out 550 for Air Pods Max recently or at launch 4 years ago get to feel snug over the lack of FOMO from the anemic lightning to USB C port and color palette swap. Still 550 bucks, no chip upgrade from the now very out of date H1, AirPods Max already are behind on features with and they will stay that way, wild! Apple can sell new products with just an update to color, but that product line is Apple Watch not AirPods Max... Finally the AirPods 4, basically Pro 2s without the silicon tips. Which makes them universally a good buy. Almost. The Pods 4 actually come in two flavors, the fully featured "Pros without the tips" for 180 USD (active noise cancellation, useful Find My features for the case, wireless charging [get these ones]) or "fancy looking Air Pod 3s" which go for 130 USD, and are mostly a design and sound upgrade. Looking at this from a consumer choice standpoint, it's nice that those who don't like having their ears sealed have the option to enjoy all the features Apple has to offer. Through a cynical lens this is probably our best example yet of Apple playing games with pricing tiers to optimize every last consumer possible, and push the eager ones up a price tier. Probably the most meaningful changes Apple announced this year for a product line. AirPods are a mandatory accessory, and they are going from strength to strength. 
+
+---9/9/24
+iPhone Szn
+11 Months of Rumors Come to Fruition
+Alrighty! It's been a fun day today, Apple did their thing and showed off the new cash cows. I have some thoughts! Let's get into them!
+
+---9/11/14
+DynPages 2.5
+Quick Work!
+Back at it again, at being inspired. Some little quality of life updates for the rendering code. You can now define an 'element' scope with a dyn attribute with no value. This allows you to then reference specific elements in the Record array within that scope, rather than needing to reference the Record again. Also Record and Plate alises are now included. An 'as' keyword lets you provide an alias to a resource you may want to reference more than once. ie "record = './Blogs.txt as blogs'" next time you can just enter 'blogs'! Both good changes to save some key strokes. Also a record can now be filtered with a supplied function. Things can't rerender so it's a static filter, but that gives some flexability. Also might be a good jumping off point to allow for rerendering 👀  
+
+---9/15/14
+More CSS and JS 
+My forever problem.
+This is by far the most amount of 'visual' work put into the site so far. For the time being I want to keep this as an SPA,and that meant having the 'Past Blogs' section live inside a scrollable div, which did not play well on mobile, or just let it hang loose and grow as long as it needed...which did not play well with performance. I think I got something kinda cool working with the highlighted section with scrolling cards. UX wise this is still pretty jank, there isn't much to tell the user to click on items to expand things, I'm sure the page jumping around on mobile does not feel the best. Ah well, it's an improvement at least!
+
+---9/15/14
+Micro
+Micro
+Hello Micros! New Format from the iPhone action button. Past thoughts of less than 150 chars.
+---9/17/24
+Micro
+Micro
+Officially fully working micros from the Siri shortcut, it was bugged out for a while. Weird! 
+
+---9/18/24
+Micro
+Micro
+iPhone and Apple Watch reviews are hitting. Watch looks to be a win. ‘Camera Control’ looks like a dud. Regular iPhone is a juice upgrade!
+
+---9/19/24
+Micro
+Micro
+The 'Nod to confirm' or 'Shake to deny' interactions with AirPods are really <i> really </i> great
+
+---9/25/24
+Micro
+Micro
+Meta’s AI glasses kinda blew the Snapchat glasses kinda out of the water.
+
+---10/1/24
+Micro
+Micro
+Did working copy fix their Siri shortcut action yet? 
+
+---10/1/24
+Micro
+Micro
+Does the working copy Siri Shortcut work yet? 
+
+---10/1/24
+Micro
+Micro
+Does the working copy Siri Shortcut work yet? 
