@@ -308,35 +308,6 @@ The 'Nod to confirm' or 'Shake to deny' interactions with AirPods are really <i>
 Micro
 Micro
 Meta’s AI glasses kinda blew the Snapchat glasses kinda out of the water.
----10/1/24
-Micro
-Micro
-Does the working copy Siri Shortcut work yet? 
-
----10/1/24
-Micro
-Micro
-Testing! 
-
----10/1/24
-Micro
-Micro
-Test numba 2
-
----10/1/24
-Micro
-Micro
-Test numba 3
-
----10/1/24
-Micro
-Micro
-Test numba 4
-
----10/1/24
-Micro
-Micro
-Test numba 7
 
 ---11/8/24
 Micro
