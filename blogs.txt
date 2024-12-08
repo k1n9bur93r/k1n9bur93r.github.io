@@ -332,3 +332,13 @@ First big Christmas tree has been bought!
 TextureCanvasTest
 TextureCanvasTest
 import {RhombusGrid} from '../js/blogs/boenCanvas.js'; window.DynRun= function(parentId){const height = document.getElementById(parentId).querySelector(`#BlogCanvas`).offsetHeight;const width =document.getElementById(parentId).querySelector(`#BlogCanvas`).offsetWidth; const texture = new RhombusGrid({canvasWidth: width, canvasHeight: height, monitorWindowResizing:true});texture.initializeGrid();document.getElementById(parentId).querySelector(`#BlogCanvas`).appendChild(texture.getCanvas());texture.startAnimation();};
+
+---12/7/24
+Micro
+Micro
+Testing if micros still overtake blogs
+
+---12/7/24
+Micro
+Micro
+Egg
