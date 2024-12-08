@@ -337,13 +337,3 @@ import {RhombusGrid} from '../js/blogs/boenCanvas.js'; window.DynRun= function(p
 Micro
 Micro
 Testing if micros still overtake blogs
-
----12/7/24
-Micro
-Micro
-Egg
-
----12/8/24
-Micro
-Micro
-Test
