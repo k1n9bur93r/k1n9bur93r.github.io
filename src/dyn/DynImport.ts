@@ -1,6 +1,6 @@
 export class DynImport {
     private baseURL: string;
-    private srcPath: string = '/src'; // Configurable base path for source files
+    private srcPath: string = '/'; // Configurable base path for source files
   
     constructor(srcPath?: string) {
       this.baseURL = window.location.origin;

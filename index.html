@@ -31,8 +31,7 @@
                 <p> Basically Mustache.Js though without ever having seen how that was built...so it's probably worse,
                     but
                     also unique! </p>
-                <sub> Background Animation By 'Merve' <a href="https://codepen.io/mervedurdagi/pen/PWzmZR">Lifted From
-                        CodePen </a>Modified by ChatGPT and I with Wuv</sub>
+                <sub> Background Animation Built off 'Merve's <a href="https://codepen.io/mervedurdagi/pen/PWzmZR">CodePen </a>
 
             </div>
 
@@ -53,13 +52,13 @@
         <div class="carousel Collapseable" dyn="n...0" plate="./plates/MicroEntry.html" filter="FilterForLength"></div>
 
         <h2 class="header-glow spotLightHeader Collapseable ">Blog Spotlight</h2>
-        <div class="glassBG">
+        <div class="glassBG Collapseable">
             <h3>Blogs With JavaScript</h3>
             <p>This week I had a vacation...I managed to not code for around 5 days before I even started working. Despite all the day dreaming of all the cool things I <i>could</i> do if I actually put fingers to keyboard.
             However! I did manage to get a bit of work done. I have asperations of more complicated blog posts, things beyond text. This requires the ability to boot up some Javascript, which is what you are seeing below! I'd like to say that this is a teaser for some future blog posts, assuming I can figure out the next steps!</p>
         </div>
         <div class="glassBG FeaturedBlog shadow-container Collapseable">
-            <div dyn="n" plate="./plates/CanvasBlogTarget.html"></div>
+            <div dyn="n" plate="./plates/CanvasBlogTarget.html" filter="FilterForFeature"></div>
 
         </div>
         <h2 class="header-glow Collapseable pastBlogsHeader ">Past Blogs
@@ -69,6 +68,11 @@
     </div>
 </body>
 <script>
+
+function FilterForFeature(records) {
+        return records.filter(record => { return  record.Title === 'TextureCanvasTest' && record.Header === 'TextureCanvasTest' });
+    }
+
     function FilterForLength(records) {
         return records.filter(record => { return record.Text.length <= 150 || (record.Title === 'Micro' && record.Header === 'Micro') });
     }
