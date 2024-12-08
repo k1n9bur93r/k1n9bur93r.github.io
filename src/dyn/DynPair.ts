@@ -1,11 +1,13 @@
 import { DynPlate } from './DynPlate';
 import { DynRecord } from './DynRecord';
 import { DynRules } from './DynRules';
+import {DynImport} from './DynImport';
 
 export class DynPair {
   private Rules: DynRules = new DynRules();
   private Plate: DynPlate = new DynPlate();
   private Record: DynRecord;
+  private Import: DynImport = new DynImport();
 
   constructor() {
     this.Record = new DynRecord(this.Rules);
@@ -52,6 +54,23 @@ export class DynPair {
           }
         });
         htmlElement.appendChild(plateCopyElement);
+
+        const scriptContent = this.Plate.PlateObj.Render.match(/<script[^>]*>([\s\S]*?)<\/script>/i);
+        if(scriptContent)
+        {
+          console.log(scriptContent[1]);
+          this.Import.LoadDynamicContentWithImports(scriptContent[1]).then(() => {
+            if(window.DynRun)
+            {
+              window.DynRun(plateCopyElement.id);
+            }
+            else
+            {
+              console.warn(`A dyn ${plateCopyElement.id} has a <script> component but does not contain a 'DynRun' function to execute.`)
+            }
+
+          });
+        }
       }
     }
 
@@ -63,4 +82,36 @@ export class DynPair {
       });
     }
   }
+
+private  LoadDynamicContentWithImports(scriptContent: string) {
+  // First, we need to get the absolute path for the import
+  const baseURL = window.location.origin;
+  const currentPath = window.location.pathname;
+  
+  // Assuming your src directory is at the root of your served content
+  // Modify this path construction based on your actual server setup
+  const jsPath = '/src/js/blogs/boenCanvas.js';
+  const absoluteImportPath = `${baseURL}${jsPath}`;
+  
+  // Rewrite the relative import to use the absolute path
+  const modifiedScript = scriptContent.replace(
+    `../js/blogs/boenCanvas.js`,
+    absoluteImportPath
+  );
+  
+  // Create a Blob with the modified module code
+  const blob = new Blob([modifiedScript], { type: 'text/javascript' });
+  const url = URL.createObjectURL(blob);
+  
+  // Import and execute the module
+  return import(url)
+    .then(() => {
+      URL.revokeObjectURL(url);
+    })
+    .catch(error => {
+      console.error('Error loading module:', error);
+      URL.revokeObjectURL(url);
+    });
+}
+
 }

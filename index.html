@@ -5,23 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K1n9's blog space</title>
-    <!-- <script type="module" src="dyn/DynPages.ts"></script>
-    <script type="module" src="js/canvasBg.js"></script>
-    <script type="module" src="js/glassStack.js"></script>
-    <script type="module" src="js/microCarousel.js"></script> -->
     <script type="module" src="src/main.ts"></script>
     <link rel="stylesheet" href="/css/nasty.css">
 </head>
 
 <body>
-    <canvas></canvas>
+    <canvas id="bgCanvas"></canvas>
     <div dyn class="content" record="./blogs.txt as blogs" shape="ParseForBlogs">
+
         <div class="Collapseable">
             <h1 class="header-glow " style=" margin-top:5%;">K1n9Bur93r</h1>
             <div class="HeaderGlass">
                 <p> Little projects and ideas in the hope of creating a good site. <a
                         href="https://github.com/k1n9bur93r/k1n9bur93r.github.io/tree/main">Github</a></p>
-                <p> Current project: <strong>Proper website with actual inspired design</strong></p>
+                <p> Current project: <strong>Something made with Three JS!</strong></p>
                 <h3>Cool note about this site, it is built with a custom templating system I call 'DynPages'</h3>
                 <p> It features the following!</p>
                 <ul>
@@ -56,20 +53,14 @@
         <div class="carousel Collapseable" dyn="n...0" plate="./plates/MicroEntry.html" filter="FilterForLength"></div>
 
         <h2 class="header-glow spotLightHeader Collapseable ">Blog Spotlight</h2>
+        <div class="glassBG">
+            <h3>Blogs With JavaScript</h3>
+            <p>This week I had a vacation...I managed to not code for around 5 days before I even started working. Despite all the day dreaming of all the cool things I <i>could</i> do if I actually put fingers to keyboard.
+            However! I did manage to get a bit of work done. I have asperations of more complicated blog posts, things beyond text. This requires the ability to boot up some Javascript, which is what you are seeing below! I'd like to say that this is a teaser for some future blog posts, assuming I can figure out the next steps!</p>
+        </div>
         <div class="glassBG FeaturedBlog shadow-container Collapseable">
+            <div dyn="n" plate="./plates/CanvasBlogTarget.html"></div>
 
-            <h1> Apple's September 2024 iPhone Event</h1>
-            <div >
-                <div dyn="57">
-                    <sub>{{Date}}</sub>
-                    <h2>{{Header}}</h2>
-                    <p>{{Text}}</p>
-                </div>
-                <div dyn="56...52">
-                    <h3>{{Header}}</h3>
-                    <p>{{Text}}</p>
-                </div>
-            </div>
         </div>
         <h2 class="header-glow Collapseable pastBlogsHeader ">Past Blogs
         </h2>
@@ -82,7 +73,7 @@
         return records.filter(record => { return record.Text.length <= 150 || (record.Title === 'Micro' && record.Header === 'Micro') });
     }
     function FilterOutMicroAndFeature(records) {
-        return records.filter(record => { return (record.Title !== 'Micro' && record.Header !== 'Micro') && record.Text.length > 150 && record.Title !== 'iPhone Szn' });
+        return records.filter(record => { return (record.Title !== 'Micro' && record.Header !== 'Micro') && record.Text.length > 150 && record.Title !== 'TextureCanvasTest' });
     }
     function ParseForBlogs(data) {
         return data
@@ -106,7 +97,6 @@
                 for (let i = 0; i < toBeCollapsed.length; i++) {
                     toBeCollapsed[i].classList.remove('Collapsed');
 
-                    console.log(savedScrollPos);
                     window.scrollTo({ top: savedScrollPos, left: 0, behavior: 'instant' });
 
                 }
@@ -117,7 +107,6 @@
                     toBeCollapsed[i].classList.add('Collapsed');
 
                     window.scrollTo({ top: -10, left: 0, behavior: 'instant' });
-                    console.log(savedScrollPos)
                 }
             }
 

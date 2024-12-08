@@ -100,7 +100,7 @@ export class DynPlate {
           childHtmlNode.setAttribute('key', this.PlateKey || '');
           this.PlateSubDyn.push(childHtmlNode.cloneNode(true) as HTMLElement);
           childHtmlNode.innerHTML = '';
-        } else if (!await this.ParsePlateForProps(childHtmlNode) && childHtmlNode.innerText && childHtmlNode.innerText.match(/^{{([^\}]+)}}$/)) {
+        } else if (!await this.ParsePlateForProps(childHtmlNode) && childHtmlNode.innerText) {
           const text = childHtmlNode.innerText.match(/\{\{(.*?)\}\}/)?.[1].trim() || '';
           const hasExistingProp = this.PlateObj.Props[text] !== undefined;
           this.PlateObj.Props[text] = hasExistingProp ? this.PlateObj.Props[text] : this.CreatePlateObjItem(text, childHtmlNode.getAttribute('recordIndex') || '');

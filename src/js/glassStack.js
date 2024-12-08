@@ -55,7 +55,6 @@ function ToggleGlassStackExpand() {
       toBeCollapsed[i].classList.add('Collapsed');
     }
     ExpandStack();
-    console.log(savedScrollPosPast);
     window.scrollTo({ top: -10, left: 0, behavior: 'instant' });
     glassStackexpanded = !glassStackexpanded;
   } else {

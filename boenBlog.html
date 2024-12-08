@@ -1,0 +1,218 @@
+<html lang="en">
+<body style="margin: 0;overflow: hidden;">
+ <script type="module">
+
+import * as THREE from 'three';
+import gsap from 'gsap';
+import {CameraSystem} from './src/js/3dTools/CameraSystem.js';
+import {RhombusGrid} from './src/js/blogs/boenCanvas.js'
+import {ParticleSystem} from './src/js/blogs/boenParticle.js'
+
+
+//Three JS Scene
+const scene = new THREE.Scene();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+
+// BG Sphere
+const vertexShader = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+const fragmentShader = `
+  uniform sampler2D sourceTexture;
+  varying vec2 vUv;
+  
+  void main() {
+    // Convert UV coordinates to spherical coordinates
+    float phi = vUv.x * 2.0 * 3.14159;
+    float theta = vUv.y * 3.14159;
+    
+    // Convert spherical to planar coordinates
+    vec2 sourceUV = vec2(
+      phi / (2.0 * 3.14159),
+      theta / 3.14159
+    );
+    
+    gl_FragColor = texture2D(sourceTexture, sourceUV);
+  }
+`;
+
+///Texture
+const sphereTexture = new RhombusGrid();
+const canvasTexture = new THREE.CanvasTexture(sphereTexture.getCanvas(), THREE.UVMapping, 
+  THREE.ClampToEdgeWrapping, THREE.ClampToEdgeWrapping,
+  THREE.LinearFilter, THREE.LinearMipMapLinearFilter,
+  THREE.RGBAFormat, THREE.UnsignedByteType,
+  1  
+);
+///Material 
+const sphereMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    sourceTexture: { value: canvasTexture }
+  },
+  vertexShader: vertexShader,
+  fragmentShader: fragmentShader,
+  side: THREE.BackSide 
+  
+});
+
+///Geometry
+
+const sphereSize = 512
+const sphereGeometry = new THREE.SphereGeometry(1.5, sphereSize, sphereSize);
+sphereGeometry.setAttribute('uv', new THREE.Float32BufferAttribute(sphereGeometry.attributes.uv.array, 2));
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+scene.add(sphere);
+
+
+//Floor Plane
+const floorPlaneGeometry = new THREE.PlaneGeometry(5,5);
+const planeMaterial = new THREE.MeshBasicMaterial({color:'black',side:THREE.DoubleSide});
+const plane = new THREE.Mesh(floorPlaneGeometry,planeMaterial)
+plane.rotation.x = -Math.PI / 2;
+plane.position.y = -.5;
+
+
+scene.add(plane);
+
+function updateSphereTexture(canvas, sphereMesh) {
+  const sphericalTexture = mapper.processCanvas(canvas);
+  if (sphereMesh.material.map !== sphericalTexture) {
+    sphereMesh.material.map = sphericalTexture;
+  }
+  sphereMesh.material.needsUpdate = true;
+}
+
+
+
+// Camera system
+
+  const cameraSystem = new CameraSystem(scene,renderer);
+
+  cameraSystem.setDefaultCamera('default', {
+    fov: 75,
+    position: { x: 5, y: 2, z: 5 },
+    lookAt: { x: 0, y: 0, z: 0 },
+    useOrbitControls: true,
+    defaultAnimation: {
+      radius: 7,        // Distance from center
+      height: 3,        // Height above the center
+      speed: 0.5,       // Rotation speed (lower is slower)
+      lookAt: new THREE.Vector3(0, 0, 0)  // Point to orbit around
+    }
+  });
+
+  // Add cameras
+  cameraSystem.addCamera('main', {
+    fov: 75,
+    position: { x: 0, y: 0, z: 5 },
+    lookAt: { x: 0, y: 0, z: 0 }
+  });
+  
+  cameraSystem.addCamera('overhead', {
+    fov: 60,
+    position: { x: 0, y: 10, z: 0 },
+    lookAt: { x: 0, y: 0, z: 0 }
+  });
+  
+  cameraSystem.addCamera('side', {
+    fov: 45,
+    position: { x: 10, y: 0, z: 0 },
+    lookAt: { x: 0, y: 0, z: 0 }
+  });
+
+  //Transitions
+  cameraSystem.addCameraTransition({
+    fromCamera: 'main',
+    toCamera: 'overhead',
+    duration: 2,
+    position: { x: 0, y: 10, z: 0 },
+    timeOffset: 0 // Starts at 0 seconds
+  });
+
+  cameraSystem.addCameraTransition({
+    fromCamera: 'overhead',
+    toCamera: 'side',
+    duration: 1.5,
+    position: { x: 10, y: 0, z: 0 },
+    timeOffset: 4 // Starts at 4 seconds
+  });
+
+ //Particles 
+
+ const particles = new ParticleSystem({sphere: sphere, scene: scene });
+ particles.initialize();
+
+// Optimized canvas drawing function
+const drawQueue = []; // Store drawing operations
+let rafId = null;
+let lastDrawTime = 0;
+const FRAME_BUDGET = 1; // ~60fps
+
+function updateCanvas() {
+  const now = performance.now();
+  const timeSinceLastDraw = now - lastDrawTime;
+  // Skip frame if we're under budget
+  if (timeSinceLastDraw < FRAME_BUDGET) {
+    rafId = requestAnimationFrame(updateCanvas);
+    return;
+   }
+    
+  //sourceContext.restore();
+  
+  // Update texture only when canvas changes
+  canvasTexture.needsUpdate = true;
+  
+  lastDrawTime = now;
+  rafId = requestAnimationFrame(updateCanvas);
+}
+
+//Start Scene
+
+function animate() {
+  requestAnimationFrame(animate);
+  cameraSystem.update(); 
+  const currentCamera = cameraSystem.getCurrentCamera();
+  renderer.render(scene, currentCamera);
+  sphereTexture.updateGroupColor();
+}
+
+
+particles.start();
+sphereTexture.initializeGrid();
+updateCanvas();
+cameraSystem.play();  // Start the sequence
+animate();
+
+//Misc
+const resizeObserver = new ResizeObserver(entries => {
+  for (const entry of entries) {
+    const width = entry.contentRect.width;
+    const height = entry.contentRect.height;
+    
+    cameraSystem.cameras.forEach(camera => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+      });
+    renderer.setSize(width, height, false);
+  }
+});
+
+resizeObserver.observe(document.body);
+
+function cleanup() {
+  if (rafId) cancelAnimationFrame(rafId);
+  resizeObserver.disconnect();
+  renderer.dispose();
+  particleSystem.dispose();
+}
+
+</script>
+</body>
+
