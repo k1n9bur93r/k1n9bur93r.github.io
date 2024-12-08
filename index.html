@@ -57,7 +57,7 @@
             <p>This week I had a vacation...I managed to not code for around 5 days before I even started working. Despite all the day dreaming of all the cool things I <i>could</i> do if I actually put fingers to keyboard.
             However! I did manage to get a bit of work done. I have asperations of more complicated blog posts, things beyond text. This requires the ability to boot up some Javascript, which is what you are seeing below! I'd like to say that this is a teaser for some future blog posts, assuming I can figure out the next steps!</p>
         </div>
-        <div class="glassBG FeaturedBlog shadow-container Collapseable">
+        <div class="glassBG FeaturedBlog shadow-container Collapseable" style="padding: 0px !important;">
             <div dyn="n" plate="./plates/CanvasBlogTarget.html" filter="FilterForFeature"></div>
 
         </div>
@@ -69,10 +69,9 @@
 </body>
 <script>
 
-function FilterForFeature(records) {
+    function FilterForFeature(records) {
         return records.filter(record => { return  record.Title === 'TextureCanvasTest' && record.Header === 'TextureCanvasTest' });
     }
-
     function FilterForLength(records) {
         return records.filter(record => { return record.Text.length <= 150 || (record.Title === 'Micro' && record.Header === 'Micro') });
     }
