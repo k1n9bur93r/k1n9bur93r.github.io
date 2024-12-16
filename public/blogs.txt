@@ -333,7 +333,27 @@ TextureCanvasTest
 TextureCanvasTest
 import {RhombusGrid} from '../js/blogs/boenCanvas.js'; window.DynRun= function(parentId){const height = document.getElementById(parentId).querySelector(`#BlogCanvas`).offsetHeight;const width =document.getElementById(parentId).querySelector(`#BlogCanvas`).offsetWidth; const texture = new RhombusGrid({canvasWidth: width, canvasHeight: height, monitorWindowResizing:true});texture.initializeGrid();document.getElementById(parentId).querySelector(`#BlogCanvas`).appendChild(texture.getCanvas());texture.startAnimation();};
 
+---12/7/24
+Micro
+Micro
+Testing if micros still overtake blogs
+
+---12/7/24
+Micro
+Micro
+Egg
+
+---12/8/24
+Micro
+Micro
+Test
+
 ---12/8/24
 Micro
 Micro
 Buyers on FB marketplace suck! I am actually an amazing buyer based off these interactions 
+
+---12/15/24
+Micro
+Micro
+Android XR! Really neat, I think the general UX converges on VisionOS, but there are some cool LLM ideas that Apple is probably far off on
