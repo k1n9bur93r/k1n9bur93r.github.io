@@ -407,3 +407,8 @@ Hallelujah!
 Micro
 Micro
 I think I wrangled the nasty bugs out of the Dyn plate binding 
+
+---4/24/25
+Micro
+Micro
+Dyn 3.0 is on the way! 
