@@ -422,3 +422,8 @@ Taking photos is so fun!
 Micro
 Micro
 One…final…design oversight. I think at least :) 
+
+---4/30/25
+Micro
+Micro
+Imagine a social system where only sentient is shared but all text output is sanitized by an LLM
